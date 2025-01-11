@@ -1,0 +1,15 @@
+@import './color-variables.scss';
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  color: $gray-900;
+  background-color: $background-light;
+  overflow-x: hidden;
+}
