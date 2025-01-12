@@ -1,3 +1,9 @@
 {
-  "where": "Kam"
+  "where": "Kam",
+  "search-destinations": "Hledat destinace",
+  "check-in": "Příjezd",
+  "check-out": "Odjezd",
+  "who": "Kdo",
+  "add-dates": "Přidat termín",
+  "add-guests": "Přidat hosty?"
 }

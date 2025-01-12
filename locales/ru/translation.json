@@ -1,3 +1,9 @@
 {
-  "where": "Где"
+  "where": "Где",
+  "search-destinations": "Поиск направлений",
+  "check-in": "Прибытие",
+  "check-out": "Выезд",
+  "who": "Кто",
+  "add-dates": "Когда?",
+  "add-guests": "Кто едет?"
 }
