@@ -170,7 +170,7 @@ const SearchForm = () => {
             type='text'
             id='location'
             name='location'
-            placeholder='Поиск направлений'
+            placeholder={t('search-destinations')}
             required
             className={styles["input"]}
             onFocus={() => setFocusField('location')}
@@ -190,14 +190,14 @@ const SearchForm = () => {
         onMouseLeave={handleMouseLeave}
       >
           <label htmlFor='arrival' className={styles["label"]}>
-            Прибытие
+            {t('check-in')}
           </label>
           <input
             type='text'
             id='arrival'
             readOnly
             value={dates.arrival ? dates.arrival.toDateString() : ""}
-            placeholder='Когда?'
+            placeholder={t('add-dates')}
             onClick={() => toggleCalendar('arrival')}
             // onBlur={handleBlur}
             className={styles["input"]}
@@ -216,14 +216,14 @@ const SearchForm = () => {
         onMouseLeave={handleMouseLeave}
       >
           <label htmlFor='departure' className={styles["label"]}>
-            Выезд
+            {t('check-out')}
           </label>
           <input
             type='text'
             id='departure'
             readOnly
             value={dates.departure ? dates.departure.toDateString() : ""}
-            placeholder='Когда?'
+            placeholder={t('add-dates')}
             onClick={() => toggleCalendar("departure")}
             className={styles["input"]}
           />
@@ -241,13 +241,13 @@ const SearchForm = () => {
         onMouseLeave={handleMouseLeave}
       >
           <label htmlFor='guests' className={styles["label"]}>
-            Кто
+            {t('who')}
           </label>
           <input
             type='text'
             id='guests'
             name='guests'
-            placeholder='Кто едет?'
+            placeholder={t('add-guests')}
             className={styles["input"]}
             onBlur={handleBlur}
             onClick={toggleGuestsPopup}
