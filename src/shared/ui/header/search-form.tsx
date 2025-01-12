@@ -2,11 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import styles from './styles.module.scss';
 import IconSvg from '../../assets/icons/icon';
 import { DateRange } from 'react-date-range';
+import { useTranslation } from 'react-i18next';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 // import DatePickerForm from '../datePicker';
 
 const SearchForm = () => {
+  const { t } = useTranslation();
+
   const [hoveredField, setHoveredField] = useState<string | null>(null);
   const [showCalendar, setShowCalendar] = useState(false);
   const [focusField, setFocusField] = useState<string | null>(null);
@@ -161,7 +164,7 @@ const SearchForm = () => {
         onMouseLeave={handleMouseLeave}
       >
           <label htmlFor='location' className={styles["label"]}>
-            Где
+            {t('where')}
           </label>
           <input
             type='text'
