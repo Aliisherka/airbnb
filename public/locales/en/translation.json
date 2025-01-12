@@ -1,3 +1,9 @@
 {
-  "where": "Where"
+  "where": "Where",
+  "search-destinations": "Search destinations",
+  "check-in": "Check in",
+  "check-out": "Check out",
+  "who": "Who",
+  "add-dates": "Add dates",
+  "add-guests": "Add guests"
 }
