@@ -24,6 +24,69 @@
       background-color: $gray-100;
     }
   }
+
+  .locale-settings-tabs {
+    border-bottom: 1px solid $gray-300;
+    margin: 0 24px;
+
+    .tab {
+      color: $gray-500;
+      border: none;
+      border-radius: 8px;
+      background-color: $background-light;
+      padding: 10px;
+      position: relative;
+
+      &[aria-selected='true'] {
+        color: $gray-900;
+      }
+      &[aria-selected='true']::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+        height: 2px;
+        background-color: $gray-900;
+        border-radius: 0;
+      }
+
+      &:hover {
+        background-color: $gray-100;
+      }
+    }
+  }
+
+  .locale-tabs {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    .tab {
+      width: 184px;
+      height: 56px;
+      padding: 9px 12px;
+      margin: 8px;
+      color: $gray-500;
+      border: none;
+      border-radius: 8px;
+      background-color: $background-light;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      
+
+      &:hover {
+        background-color: $gray-100;
+      }
+      &.active {
+        border: 1px solid $gray-900;
+      }
+    }
+  }
 }
 
 .search-form {
@@ -36,7 +99,7 @@
   position: relative;
 
   &.blurred {
-    background-color: $gray-200; // Затемняем фон
+    background-color: $gray-200;
   }
 
   .search-field {
@@ -47,17 +110,17 @@
     position: relative;
 
     &.active {
-      background-color: $background-light; // Выделение активного поля
+      background-color: $background-light;
       z-index: 1;
       pointer-events: auto;
     }
 
     &.active:hover {
-      background-color: $background-light; // Hover не влияет на активный элемент
+      background-color: $background-light;
     }
 
     &:not(.active):hover {
-      background-color: $gray-300; // Затемнение неактивных элементов
+      background-color: $gray-300;
     }
 
     &:hover {
