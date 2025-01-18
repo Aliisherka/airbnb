@@ -1,0 +1,37 @@
+@import '../../app/index.scss';
+
+.house-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(302px, 1fr));
+  gap: 40px 24px;
+}
+
+.card-content {
+  width: 302px;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: $gray-900;
+
+  .card-image {
+    width: 100%;
+    margin-bottom: 12px;
+    border-radius: 12px;
+  }
+
+  .card-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    .distance {
+      color: $gray-500;
+    }
+
+    .rating {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+  }
+}
