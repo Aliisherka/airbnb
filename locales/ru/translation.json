@@ -8,5 +8,16 @@
   "add-guests": "Кто едет?",
   "language-and-region": "Язык и регион",
   "kilometrs": "километр",
-  "night": "ночь"
+  "night": "ночь",
+  "welcome-to-airbnb": "Добро пожаловать в Airbnb",
+  "log-in-or-sign-up": "Войдите или зарегистрируйтесь",
+  "log-in": "Войти",
+  "sign-up": "Зарегистрироваться",
+  "country-code": "Страна/регион",
+  "kazakhstan": "Казахстан",
+  "czechia": "Чехия",
+  "usa": "Сша",
+  "phone-number": "Номер телефона",
+  "password": "Введите пароль",
+  "continue": "Продолжить"
 }
