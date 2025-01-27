@@ -8,5 +8,16 @@
   "add-guests": "Add guests",
   "language-and-region": "Langiage and region",
   "kilometrs": "kilometrs away",
-  "night": "night"
+  "night": "night",
+  "welcome-to-airbnb": "Welcome to Airbnb",
+  "log-in-or-sign-up": "Log in or sign up",
+  "log-in": "Log in",
+  "sign-up": "Sign up",
+  "country-code": "Country code",
+  "kazakhstan": "Kazakhstan",
+  "czechia": "Czechia",
+  "usa": "USA",
+  "phone-number": "Phone number",
+  "password": "Password",
+  "continue": "Continue"
 }

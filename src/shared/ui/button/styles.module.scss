@@ -1,0 +1,25 @@
+.gradient-button {
+  height: 48px;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 24px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+
+  &.small {
+    width: 168px;
+    font-size: 12px;
+  }
+
+  &.medium {
+    width: 323px;
+    font-size: 16px;
+  }
+
+  &.large {
+    width: 520px;
+    font-size: 20px;
+  }
+}

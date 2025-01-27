@@ -1,0 +1,46 @@
+@import '../../../app/index.scss';
+
+.input-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid $gray-400;
+  padding: 26px 12px 6px;
+
+  &.focused .input-label {
+    font-size: 12px;
+    top: 16px;
+    left: 10px;
+  }
+
+  &:focus-within {
+    border-color: $gray-900;
+    border-width: 2px;
+  }
+}
+
+.input-label {
+  font-size: 16px;
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: $gray-400;
+  pointer-events: none;
+  transition: all 0.2s ease;
+}
+
+.input-field {
+  border: none;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input-error {
+  border: 1px solid $error-500;
+}
+
+.input-error-message {
+  color: $error-500;
+  font-size: 12px;
+}
