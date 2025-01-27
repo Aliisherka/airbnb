@@ -1,0 +1,14 @@
+.dropdown-container {
+  position: relative;
+  
+  .dropdown-menu {
+    position: absolute;
+    top: 58px;
+    right: 0;
+    background: white;
+    border-radius: 12px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 16px 0px;
+    z-index: 1001;
+  }
+}
+
