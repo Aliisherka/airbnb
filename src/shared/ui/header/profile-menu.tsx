@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import authenticate from '../../api/auth';
 import IconSvg from '../../assets/icons/icon';
 import GradientButton from '../button/gradient-button';
 import DropdownMenu from '../dropdown-menu/dropdown-menu';
@@ -16,6 +17,7 @@ const ProfileMenu = () => {
   const [errors, setErrors] = useState({ phone: '', password: '' });
   const [isFocused, setIsFocused] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const validate = () => {
     const newErrors = { phone: '', password: '' };
@@ -25,10 +27,20 @@ const ProfileMenu = () => {
     return !newErrors.phone && !newErrors.password;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (validate()) {
-      console.log('Отправка данных:', { phone, password });
+    if (!validate()) return;
+
+    setLoading(true);
+    try {
+      const user = await authenticate(phone, password);
+      console.log('Успешный вход:', user);
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error('Ошибка авторизации:', error);
+      setErrors((prev) => ({ ...prev, phone: 'Ошибка входа' }));
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -155,7 +167,9 @@ const ProfileMenu = () => {
               error={errors.password}
             />
             <div className={styles['gradient-button-container']}>
-              <GradientButton type='submit' size='large'>{t('continue')}</GradientButton>
+              <GradientButton type='submit' size='large'>
+                {loading ? 'Загрузка' : t('continue')}
+              </GradientButton>
             </div>
           </form>
         </div>
