@@ -12,7 +12,7 @@ const HouseList = ({ houses }: { houses: any[] }) => {
           distance={house.distance}
           price={house.price}
           rating={house.rating}
-          image={house.image}
+          images={house.images}
         />
       ))}
     </div>
