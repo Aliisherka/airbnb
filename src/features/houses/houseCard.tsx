@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import IconSvg from '../../shared/assets/icons/icon';
 import { getCurrentLanguage } from '../../shared/lib/lang';
@@ -9,12 +9,26 @@ type HouseProps = {
   distance: string;
   price: string;
   rating: number;
-  image: string;
+  images: string[];
 };
 
-const HouseCard: React.FC<HouseProps> = ({ title, distance, price, rating, image }) => {
+const HouseCard: React.FC<HouseProps> = ({ title, distance, price, rating, images }) => {
   const { t } = useTranslation();
   const currentLang = getCurrentLanguage();
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [showArrows, setShowArrows] = useState(false);
+
+  const handleNextImage = () => {
+    if (currentImageIndex < images.length - 1) {
+      setCurrentImageIndex(prev => prev + 1);
+    }
+  };
+  
+  const handlePrevImage = () => {
+    if (currentImageIndex > 0) {
+      setCurrentImageIndex(prev => prev - 1);
+    }
+  };
 
   const renderDistance = () => {
     if (currentLang === 'ru') {
@@ -27,8 +41,40 @@ const HouseCard: React.FC<HouseProps> = ({ title, distance, price, rating, image
   };
 
   return (
-    <a href='#' className={styles['card-content']}>
-      <img className={styles['card-image']} src={image} alt={title} />
+    <div
+      className={styles['card-content']}
+      onMouseEnter={() => setShowArrows(true)}
+      onMouseLeave={() => setShowArrows(false)}
+    >
+      <div className={styles["image-container"]}>
+        <div className={styles["slider"]} style={{ transform: `translateX(-${currentImageIndex * 100}%)` }}>
+          {images.map((image, index) => (
+            <img key={index} className={styles["card-image"]} src={image} alt={title} />
+          ))}
+        </div>
+        {showArrows && images.length > 1 && (
+          <>
+            {currentImageIndex > 0 && (
+              <button className={styles['prev-button']} onClick={handlePrevImage}>
+                <IconSvg name='chevron-left' width='16px' height='16px' />
+              </button>
+            )}
+            {currentImageIndex < images.length - 1 && (
+              <button className={styles['next-button']} onClick={handleNextImage}>
+                <IconSvg name='chevron-right' width='16px' height='16px' />
+              </button>
+            )}
+          </>
+        )}
+        <div className={styles['indicators']}>
+          {images.map((_, index) => (
+            <div
+              key={index}
+              className={`${styles['indicator']} ${currentImageIndex === index ? styles['active'] : ''}`}
+            ></div>
+          ))}
+        </div>
+      </div>
       <div className={styles['card-body']}>
         <div>
           <h2>{title}</h2>
@@ -40,7 +86,7 @@ const HouseCard: React.FC<HouseProps> = ({ title, distance, price, rating, image
           <p>{rating}</p>
         </div>
       </div>
-    </a>
+    </div>
   );
 };
 
