@@ -19,5 +19,10 @@
   "usa": "Сша",
   "phone-number": "Номер телефона",
   "password": "Введите пароль",
-  "continue": "Продолжить"
+  "continue": "Продолжить",
+  "messages": "Сообщения",
+  "log-out": "Выйти",
+  "notifications": "Уведомления",
+  "trips": "Поездки",
+  "wishlists": "Вишлисты"
 }
