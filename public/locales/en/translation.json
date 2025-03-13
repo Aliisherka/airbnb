@@ -19,5 +19,9 @@
   "usa": "USA",
   "phone-number": "Phone number",
   "password": "Password",
-  "continue": "Continue"
+  "continue": "Continue",
+  "messages": "Messages",
+  "notifications": "Notifications",
+  "trips": "Trips",
+  "wishlists": "Wishlists"
 }

@@ -7,8 +7,10 @@ import DropdownMenu from '../dropdown-menu/dropdown-menu';
 import Input from '../input';
 import Modal from '../modal';
 import styles from './styles.module.scss';
+import { useAuth } from '../../hooks/useAuth';
 
 const ProfileMenu = () => {
+  const { user, login, logout } = useAuth();
   const { t } = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [phone, setPhone] = useState('');
@@ -18,6 +20,8 @@ const ProfileMenu = () => {
   const [isFocused, setIsFocused] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const userInitial = user ? user.phoneNumber.charAt(1).toUpperCase() : '';
 
   const validate = () => {
     const newErrors = { phone: '', password: '' };
@@ -35,6 +39,7 @@ const ProfileMenu = () => {
     try {
       const user = await authenticate(phone, password);
       console.log('Успешный вход:', user);
+      login(user);
       setIsModalOpen(false);
     } catch (error) {
       console.error('Ошибка авторизации:', error);
@@ -93,35 +98,76 @@ const ProfileMenu = () => {
         button={
           <button className={styles['user-button']} onClick={() => setIsMenuOpen(!isMenuOpen)}>
             <IconSvg name='user-menu' width='16px' height='16px' />
-            <IconSvg name='user' width='32px' height='32px' />
+            {user ? (
+              <div className={styles['user-avatar']}>
+                {userInitial}
+              </div>
+            ) : (
+              <>
+                <IconSvg name="user" width="32px" height="32px" />
+              </>
+            )}
           </button>
         }
         isOpen={isMenuOpen}
         onClose={handleMenuClose}
       >
         <ul className={styles['profile-menu']}>
-          <li>
-            <button
-              className={styles['profile-menu-button']}
-              onClick={() => {
-                setIsModalOpen(true);
-                handleMenuClose();
-              }}
-            >
-              {t('log-in')}
-            </button>
-          </li>
-          <li>
-            <button
-              className={styles['profile-menu-button']}
-              onClick={() => {
-                setIsModalOpen(true);
-                handleMenuClose();
-              }}
-            >
-              {t('sign-up')}
-            </button>
-          </li>
+          {user ? (
+            <>
+              <li>
+                <button className={styles['profile-menu-button']}>
+                  {t('messages')}
+                </button>
+              </li>
+              <li>
+                <button className={styles['profile-menu-button']}>
+                  {t('notifications')}
+                </button>
+              </li>
+              <li>
+                <button className={styles['profile-menu-button']}>
+                  {t('trips')}
+                </button>
+              </li>
+              <li>
+                <button className={styles['profile-menu-button']}>
+                  {t('wishlists')}
+                </button>
+              </li>
+              <div className={styles['divider']}></div>
+              <li>
+                <button className={styles['profile-menu-button']} onClick={logout}>
+                  {t('log-out')}
+                </button>
+              </li>
+            </>
+          ) : (
+            <>  
+              <li>
+                <button
+                  className={styles['profile-menu-button']}
+                  onClick={() => {
+                    setIsModalOpen(true);
+                    handleMenuClose();
+                  }}
+                >
+                  {t('log-in')}
+                </button>
+              </li>
+              <li>
+                <button
+                  className={styles['profile-menu-button']}
+                  onClick={() => {
+                    setIsModalOpen(true);
+                    handleMenuClose();
+                  }}
+                >
+                  {t('sign-up')}
+                </button>
+              </li>
+            </>
+          )}
         </ul>
       </DropdownMenu>
       <Modal 

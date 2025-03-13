@@ -4,12 +4,15 @@ import './index.scss'
 import { Provider } from 'react-redux'
 import { store } from './store'
 import { Router } from './router'
+import { AuthProvider } from '../shared/hooks/useAuth';
 import './locales/index'
 
 const App = () => {
     return (
         <Provider store={store}>
-            <Router />
+            <AuthProvider>
+                <Router />
+            </AuthProvider>
         </Provider>
     )
 }
