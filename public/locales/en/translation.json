@@ -23,5 +23,10 @@
   "messages": "Messages",
   "notifications": "Notifications",
   "trips": "Trips",
-  "wishlists": "Wishlists"
+  "wishlists": "Wishlists",
+  "entire-villa": "Entire villa,",
+  "guests": "guests",
+  "bedrooms": "bedrooms",
+  "beds": "beds",
+  "baths": "baths"
 }

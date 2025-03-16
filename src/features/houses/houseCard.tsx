@@ -10,9 +10,10 @@ type HouseProps = {
   price: string;
   rating: number;
   images: string[];
+  _id: string;
 };
 
-const HouseCard: React.FC<HouseProps> = ({ title, distance, price, rating, images }) => {
+const HouseCard: React.FC<HouseProps> = ({ title, distance, price, rating, images, _id }) => {
   const { t } = useTranslation();
   const currentLang = getCurrentLanguage();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -40,11 +41,16 @@ const HouseCard: React.FC<HouseProps> = ({ title, distance, price, rating, image
     return null;
   };
 
+  const handleOpenHousePage = () => {
+    window.open(`/airbnb/house/${_id}`, '_blank');
+  };
+
   return (
     <div
       className={styles['card-content']}
       onMouseEnter={() => setShowArrows(true)}
       onMouseLeave={() => setShowArrows(false)}
+      onClick={handleOpenHousePage}
     >
       <div className={styles["image-container"]}>
         <div className={styles["slider"]} style={{ transform: `translateX(-${currentImageIndex * 100}%)` }}>
@@ -55,12 +61,12 @@ const HouseCard: React.FC<HouseProps> = ({ title, distance, price, rating, image
         {showArrows && images.length > 1 && (
           <>
             {currentImageIndex > 0 && (
-              <button className={styles['prev-button']} onClick={handlePrevImage}>
+              <button className={styles['prev-button']} onClick={(e) => { e.stopPropagation(); handlePrevImage(); }}>
                 <IconSvg name='chevron-left' width='16px' height='16px' />
               </button>
             )}
             {currentImageIndex < images.length - 1 && (
-              <button className={styles['next-button']} onClick={handleNextImage}>
+              <button className={styles['next-button']} onClick={(e) => { e.stopPropagation(); handleNextImage(); }}>
                 <IconSvg name='chevron-right' width='16px' height='16px' />
               </button>
             )}

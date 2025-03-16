@@ -13,6 +13,7 @@ const HouseList = ({ houses }: { houses: any[] }) => {
           price={house.price}
           rating={house.rating}
           images={house.images}
+          _id={house._id}
         />
       ))}
     </div>
