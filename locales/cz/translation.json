@@ -23,5 +23,10 @@
   "log-out": "Odhlásit se",
   "notifications": "Upozornění",
   "trips": "Pobyty",
-  "wishlists": "Vysněné"
+  "wishlists": "Vysněné",
+  "entire-villa": "Celá nemovitost:",
+  "guests": "hostů",
+  "bedrooms": "ložnic",
+  "beds": "lůžek",
+  "baths": "koupelna"
 }
