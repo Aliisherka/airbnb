@@ -42,7 +42,7 @@ const HouseCard: React.FC<HouseProps> = ({ title, distance, price, rating, image
   };
 
   const handleOpenHousePage = () => {
-    window.open(`/airbnb/house/${_id}`, '_blank');
+    window.open(`/airbnb/#/house/${_id}`, '_blank');
   };
 
   return (
