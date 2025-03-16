@@ -1,6 +1,7 @@
 import React from "react"
-import { Route, Routes, useLocation, Navigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Home from '../../pages/home';
+import HousePage from "../../pages/houses";
 import { Header } from "../../shared/ui/header";
 
 export const Router = () => {
@@ -9,6 +10,7 @@ export const Router = () => {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/house/:id" element={<HousePage />} />
       </Routes>
     </>
   )
