@@ -5,11 +5,15 @@ import { DateRange } from 'react-date-range';
 import { useTranslation } from 'react-i18next';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
-// import DatePickerForm from '../datePicker';
+import DropdownMenu from '../dropdown-menu/dropdown-menu';
+import { API_URL } from '../../api/config';
 
 const SearchForm = () => {
   const { t } = useTranslation();
 
+  const [query, setQuery] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [hoveredField, setHoveredField] = useState<string | null>(null);
   const [showCalendar, setShowCalendar] = useState(false);
   const [focusField, setFocusField] = useState<string | null>(null);
@@ -27,7 +31,6 @@ const SearchForm = () => {
   const guestsPopupRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Обработчик клика вне компонента
     const handleClickOutside = (event: MouseEvent) => {
       if (
         calendarRef.current &&
@@ -46,7 +49,6 @@ const SearchForm = () => {
         !containerRef.current.contains(event.target as Node)
       ) {
         setShowGuestsPopup(false);
-        // Если фокус был на поле guests, то сбрасываем (по желанию)
         if (focusField === 'guests') {
           setFocusField(null);
         }
@@ -59,32 +61,70 @@ const SearchForm = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (!query) {
+      setSuggestions([]);
+      return;
+    }
+  
+    const timeout = setTimeout(async () => {
+      const results = await fetchLocations(query);
+      setSuggestions(results);
+    }, 300);
+  
+    return () => clearTimeout(timeout);
+  }, [query]);
+
+
+  async function fetchLocations(query: string) {
+    if (!query) return [];
+  
+    const cityUrl = `https://photon.komoot.io/api/?q=${query}&limit=5&osm_tag=place:city`;
+    let response = await fetch(cityUrl);
+    let data = await response.json();
+  
+    if (data.features.length > 0) return data.features.map(formatSuggestion);
+  
+    const generalUrl = `https://photon.komoot.io/api/?q=${query}&limit=5`;
+    response = await fetch(generalUrl);
+    data = await response.json();
+  
+    return data.features.map(formatSuggestion);
+  }
+
+  function formatSuggestion(feature: any) {
+    return {
+      name: feature.properties.name,
+      country: feature.properties.country,
+      type: feature.properties.osm_value,
+    };
+  }
+
   const handleSelect = (ranges) => {
     const { startDate, endDate } = ranges.selection;
-    // console.log(focusField)
     if (focusField === 'arrival') {
       setDates((prev) => ({
         ...prev,
         arrival: startDate,
-        departure: startDate > (prev.departure || startDate) ? null : prev.departure, // Сбрасываем выезд, если дата "прибытия" позже
+        departure: startDate > (prev.departure || startDate) ? null : prev.departure,
       }));
-      setFocusField('departure'); // Переходим к выбору "Выезда"
+      setFocusField('departure');
     } else {
       setDates((prev) => ({
         ...prev,
         departure: endDate,
       }));
-      setShowCalendar(false); // Закрываем календарь после выбора "Выезда"
+      setShowCalendar(false);
     }
   };
 
   const toggleCalendar = (field) => {
     console.log(focusField)
     if (focusField === field) {
-      setShowCalendar(false); // Закрываем календарь, если поле уже активно
+      setShowCalendar(false);
       setFocusField(null);
     } else {
-      setFocusField(field); // Устанавливаем текущее активное поле
+      setFocusField(field);
       setShowCalendar(true);
 
       if (containerRef.current) {
@@ -103,24 +143,22 @@ const SearchForm = () => {
   };
 
   const handleBlur = () => {
-    setFocusField(null); // Сбрасываем активное поле при потере фокуса
+    setFocusField(null);
   };
 
   const handleMouseEnter = (field: string) => {
-    setHoveredField(field); // Устанавливаем активное поле при наведении
+    setHoveredField(field);
   };
 
   const handleMouseLeave = () => {
-    setHoveredField(null); // Сбрасываем активное поле при выходе мыши
+    setHoveredField(null);
   };
 
   const toggleGuestsPopup = () => {
     if (focusField === 'guests') {
-      // Если уже активно — закрываем
       setShowGuestsPopup(false);
       setFocusField(null);
     } else {
-      // Иначе открываем
       setFocusField('guests');
       setShowGuestsPopup(true);
     }
@@ -139,12 +177,30 @@ const SearchForm = () => {
   const guestsString = () => {
     const guestsCount = adults + children;
     if (guestsCount === 0) return '';
-    // Пример формата: "2 взрослых, 1 ребёнок"
     let str = `${adults} взросл${adults > 1 ? 'ых' : 'ый'}`;
     if (children > 0) {
       str += `, ${children} дет${children > 1 ? 'ей' : 'ёныш'}`;
     }
     return str;
+  };
+
+  const handleSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
+  
+    if (!query.trim()) return;
+  
+    try {
+      const response = await fetch(`${API_URL}/houses/search?location=${encodeURIComponent(query)}`);
+      
+      if (!response.ok) {
+        throw new Error(`Ошибка: ${response.statusText}`);
+      }
+  
+      const data = await response.json();
+      console.log('Результаты поиска:', data);
+    } catch (error) {
+      console.error('Ошибка при поиске:', error);
+    }
   };
 
   return (
@@ -155,6 +211,7 @@ const SearchForm = () => {
       action='/search'
       method='GET'
       ref={containerRef}
+      onSubmit={handleSearch}
     >
       <div 
         className={`${styles['search-field']} ${styles['location']} ${
@@ -166,16 +223,48 @@ const SearchForm = () => {
           <label htmlFor='location' className={styles["label"]}>
             {t('where')}
           </label>
-          <input
-            type='text'
-            id='location'
-            name='location'
-            placeholder={t('search-destinations')}
-            required
-            className={styles["input"]}
-            onFocus={() => setFocusField('location')}
-            onBlur={handleBlur}
-          />
+          <DropdownMenu
+            button={
+              <input
+                type='text'
+                id='location'
+                name='location'
+                placeholder={t('search-destinations')}
+                required
+                value={query}
+                className={styles['input']}
+                onChange={(e) => {
+                  setQuery(e.target.value);
+                }}
+                onFocus={() => {
+                  setFocusField('location');
+                  setIsDropdownOpen(true);
+                }}
+                onBlur={handleBlur}
+              />
+            }
+            isOpen={isDropdownOpen && suggestions.length > 0}
+            onClose={() => setIsDropdownOpen(false)}
+          >
+            <ul className={styles['dropdown-list']}>
+              {suggestions.map((place, index) => (
+                <li
+                  key={index}
+                  className={styles['dropdown-item']}
+                  onClick={() => {
+                    setQuery(place.name);
+                    setSuggestions([]);
+                    setIsDropdownOpen(false);
+                  }}
+                >
+                  <div className={styles['dropdown-img']}>
+                    <IconSvg name='location'/>
+                  </div>
+                  <p className={styles['dropdown-text']}>{place.name}, {place.country}</p>
+                </li>
+              ))}
+            </ul>
+          </DropdownMenu>
       </div>
       <div 
         className={`${styles['divider']} ${
@@ -189,18 +278,18 @@ const SearchForm = () => {
         onMouseEnter={() => handleMouseEnter('arrival')}
         onMouseLeave={handleMouseLeave}
       >
-          <label htmlFor='arrival' className={styles["label"]}>
+          <label htmlFor='arrival' className={styles['label']}>
             {t('check-in')}
           </label>
           <input
             type='text'
             id='arrival'
             readOnly
-            value={dates.arrival ? dates.arrival.toDateString() : ""}
+            value={dates.arrival ? dates.arrival.toDateString() : ''}
             placeholder={t('add-dates')}
             onClick={() => toggleCalendar('arrival')}
             // onBlur={handleBlur}
-            className={styles["input"]}
+            className={styles['input']}
           />
       </div>
       <div 
@@ -215,14 +304,14 @@ const SearchForm = () => {
         onMouseEnter={() => handleMouseEnter('departure')}
         onMouseLeave={handleMouseLeave}
       >
-          <label htmlFor='departure' className={styles["label"]}>
+          <label htmlFor='departure' className={styles['label']}>
             {t('check-out')}
           </label>
           <input
             type='text'
             id='departure'
             readOnly
-            value={dates.departure ? dates.departure.toDateString() : ""}
+            value={dates.departure ? dates.departure.toDateString() : ''}
             placeholder={t('add-dates')}
             onClick={() => toggleCalendar("departure")}
             className={styles["input"]}
@@ -240,7 +329,7 @@ const SearchForm = () => {
         onMouseEnter={() => handleMouseEnter('guests')}
         onMouseLeave={handleMouseLeave}
       >
-          <label htmlFor='guests' className={styles["label"]}>
+          <label htmlFor='guests' className={styles['label']}>
             {t('who')}
           </label>
           <input
@@ -264,15 +353,15 @@ const SearchForm = () => {
               {
                 startDate: dates.arrival || new Date(),
                 endDate: dates.departure || dates.arrival || new Date(),
-                key: "selection",
+                key: 'selection',
               },
             ]}
             onChange={handleSelect}
-            minDate={new Date()} // Запрет на выбор прошлых дат
+            minDate={new Date()}
             rangeColors={["#ff5a5f"]}
-            months={2} // Два месяца рядом
-            direction='horizontal' // Горизонтальная ориентация
-            className={styles["hiddenRanges"]}
+            months={2}
+            direction='horizontal'
+            className={styles['hiddenRanges']}
           />
         </div>
       )}
