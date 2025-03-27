@@ -167,6 +167,35 @@
         color: $gray-500;
       }
     }
+
+    .dropdown-list {
+      padding: 24px 16px;
+      list-style: none;
+
+      .dropdown-item {
+        padding: 8px 16px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+
+        .dropdown-img {
+          background-color: $gray-300;
+          width: 48px;
+          height: 48px;
+          border-radius: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .dropdown-text {
+          width: 289px;
+          height: 40px;
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
   }
 
   .divider {
