@@ -1,18 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styles from './styles.module.scss';
 import HouseList from '../../features/houses/houseList';
-import { getHouses } from '../../shared/api/houses';
+import { useAppDispatch, useAppSelector } from '../../app/store/hooks';
+import { fetchHouses } from '../../app/slices/housesSlice';
 
 const Home = () => {
-  const [houses, setHouses] = useState([]);
+  const dispatch = useAppDispatch();
+  const { houses, searchResults, status } = useAppSelector(state => state.houses);
 
   useEffect(() => {
-    getHouses().then(setHouses);
-  }, []);
+    dispatch(fetchHouses());
+  }, [dispatch]);
+
+  const displayedHouses = searchResults !== null ? searchResults : houses;
 
   return (
     <div className={styles['home']}>
-      <HouseList houses={houses} />
+      {status === 'loading' && <p>Загрузка...</p>}
+      {status === 'failed' && <p>Ошибка загрузки</p>}
+      {displayedHouses.length > 0 ? (
+        <HouseList houses={displayedHouses} />
+      ) : (
+        <p>Дома не найдены</p>
+      )}
     </div>
   );
 };

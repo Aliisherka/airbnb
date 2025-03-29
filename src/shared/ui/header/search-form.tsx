@@ -6,10 +6,12 @@ import { useTranslation } from 'react-i18next';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import DropdownMenu from '../dropdown-menu/dropdown-menu';
-import { API_URL } from '../../api/config';
+import { searchHouses } from '../../../app/slices/housesSlice';
+import { useAppDispatch } from '../../../app/store/hooks';
 
 const SearchForm = () => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
 
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
@@ -186,21 +188,10 @@ const SearchForm = () => {
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
-  
+    
     if (!query.trim()) return;
-  
-    try {
-      const response = await fetch(`${API_URL}/houses/search?location=${encodeURIComponent(query)}`);
-      
-      if (!response.ok) {
-        throw new Error(`Ошибка: ${response.statusText}`);
-      }
-  
-      const data = await response.json();
-      console.log('Результаты поиска:', data);
-    } catch (error) {
-      console.error('Ошибка при поиске:', error);
-    }
+
+    dispatch(searchHouses(query));
   };
 
   return (
