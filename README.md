@@ -1,50 +1,54 @@
-# React + TypeScript + Vite
+# Airbnb Clone
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a pet project that replicates key functionalities of Airbnb, allowing users to browse, search, and view rental listings.
 
-Currently, two official plugins are available:
+## Live Demo  
+[GitHub Pages Deployment](https://aliisherka.github.io/airbnb/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features  
+- **Property Listings**: View a collection of rental properties with images, descriptions, and pricing.  
+- **Search & Filtering**: Find properties based on city and country. Currently, search validation is limited to Almaty (Kazakhstan) and Czechia due to the availability of listings.  
+- **User Authentication**: Users can register and log in to their accounts.  
+- **Multi-language Support**: The application supports 3 languages for a broader user base.  
+- **Responsive Design**: Optimized for desktop. Mobile version is still in development.  
+- **Interactive UI**: Users can open property details and browse listings smoothly using a card carousel.
 
-## Expanding the ESLint configuration
+## Backend Integration  
+This project fetches data from a backend server hosted on **Render.com**, which is built with **MongoDB**, **Express**, and **Node.js**.  
+- **Property Listings and User Data**: Stored in **MongoDB Atlas**.  
+- **Images**: Hosted on **Cloudinary** for better performance and scalability.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Known Issues  
+- **Server delay**: Since the backend is hosted on Render, there may be a delay of up to 50 seconds for loading property listings if the server is idle.
 
-- Configure the top-level `parserOptions` property like this:
+## Technologies Used  
+- **Frontend**: HTML, CSS, JavaScript, React, TypeScript  
+- **Styling**: Sass  
+- **Deployment**: GitHub Pages
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Installation & Usage  
+1. Clone the repository:  
+   ```sh  
+   git clone https://github.com/Aliisherka/airbnb.git
+   ```
+2. Navigate to the project directory:  
+   ```sh  
+   cd airbnb
+   ```
+3. Install dependencies:
+   ```sh
+   npm install
+   ```
+4. Run the project locally:
+   ```sh
+   npm start
+   ```
+5.	Open http://localhost:3000/ in your browser.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Future Improvements  
+- Mobile version  
+- Refine the property card page, as it is not fully developed yet.  
+- Allow users to add their own property listings.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Contact  
+For any questions or suggestions, feel free to reach out via GitHub issues or pull requests.
