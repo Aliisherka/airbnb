@@ -28,5 +28,6 @@
   "guests": "hostů",
   "bedrooms": "ložnic",
   "beds": "lůžek",
-  "baths": "koupelna"
+  "baths": "koupelna",
+  "loading-text": "Počkejte, server se spouští. Může to trvat až 40 sekund, protože server usíná při nečinnosti. V běžných podmínkách bude načítání rychlejší."
 }
