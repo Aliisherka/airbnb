@@ -28,5 +28,6 @@
   "guests": "guests",
   "bedrooms": "bedrooms",
   "beds": "beds",
-  "baths": "baths"
+  "baths": "baths",
+  "loading-text": "Please wait, the server is starting. This may take up to 40 seconds because the server sleeps due to inactivity. Under normal conditions, the loading will be faster."
 }
