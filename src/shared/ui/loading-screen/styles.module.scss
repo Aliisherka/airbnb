@@ -1,0 +1,54 @@
+@import '../../../app/styles/index.scss';
+
+.loading-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  margin-top: 100px;
+
+  .circle-container {
+    position: relative;
+    width: 160px;
+    height: 160px;
+
+    .progress-ring {
+      width: 100%;
+      height: 100%;
+
+      circle {
+        fill: transparent;
+        stroke-width: 5;
+      }
+
+      &-background {
+        stroke: $gray-200;
+      }
+
+      &-circle {
+        stroke: $gray-500;
+        stroke-linecap: round;
+        animation: rotate 3s linear infinite;
+        transform-origin: 50%;
+      }
+    }
+  }
+
+  .loading-text {
+    margin-top: 20px;
+    color: $gray-500;
+    font-size: 16px;
+    text-align: center;
+    max-width: 540px;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
