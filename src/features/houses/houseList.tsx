@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './styles.module.scss';
-import HouseCard from './houseCard';
+import HouseCard from './houseCard/houseCard';
 
 const HouseList = ({ houses }: { houses: any[] }) => {
   return (
