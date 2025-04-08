@@ -3,7 +3,11 @@
 .divider {
   width: 1px;
   min-width: 1px;
-  height: 30px;
-  background-color: $gray-400;
+  height: 26px;
+  background-color: $gray-300;
   align-self: center;
+}
+
+.hidden {
+  opacity: 0;
 }
