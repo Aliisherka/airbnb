@@ -1,7 +1,6 @@
 @import '../../../app/index.scss';
 
 .card-content {
-  width: 302px;
   display: flex;
   flex-direction: column;
   text-decoration: none;
@@ -10,73 +9,73 @@
   .image-container {
     position: relative;
     width: 100%;
-    height: 288px;
     margin-bottom: 12px;
     overflow: hidden;
-  }
 
-  .slider {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-    width: 100%;
-  }
+    .slider {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+      width: 100%;
 
-  .card-image {
-    width: 100%;
-    border-radius: 12px;
-    filter: brightness(90%);
-  }
+      .card-image {
+        width: 100%;
+        object-fit: cover;
+        border-radius: 12px;
+        filter: brightness(90%);
+      }
+    }
 
-  .prev-button,
-  .next-button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    padding: 4px;
-    border: none;
-    cursor: pointer;
-  }
-
-  .prev-button {
-    left: 10px;
-  }
-
-  .next-button {
-    right: 10px;
-  }
-
-  .prev-button:hover,
-  .next-button:hover {
-    background: $background-light;
-    transform: translateY(-50%) scale(1.05);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
-
-  .indicators {
-    display: flex;
-    gap: 6px;
-    justify-content: center;
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
+    .prev-button,
+    .next-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      padding: 4px;
+      border: none;
+      cursor: pointer;
+    }
   
-  .indicator {
-    width: 8px;
-    height: 8px;
-    background: $gray-100;
-    border-radius: 50%;
-    opacity: 0.5;
-    transition: opacity 0.3s;
-  }
+    .prev-button {
+      left: 10px;
+    }
   
-  .indicator.active {
-    opacity: 1;
-    background: $background-light;
+    .next-button {
+      right: 10px;
+    }
+  
+    .prev-button:hover,
+    .next-button:hover {
+      background: $background-light;
+      transform: translateY(-50%) scale(1.05);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .indicators {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .indicator {
+      width: 8px;
+      height: 8px;
+      background: $gray-100;
+      border-radius: 50%;
+      opacity: 0.5;
+      transition: opacity 0.3s;
+    }
+    
+    .indicator.active {
+      opacity: 1;
+      background: $background-light;
+    }
   }
 
   .card-body {
