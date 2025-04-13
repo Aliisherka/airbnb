@@ -1,7 +1,46 @@
 @import '../../app/index.scss';
 
 .house-list {
+  padding: 0 24px;
+  margin: 24px 0 32px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(302px, 1fr));
   gap: 40px 24px;
+  grid-template-columns: repeat(1, 1fr);
+}
+
+@media (min-width: 550px) {
+  .house-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 744px) {
+  .house-list {
+    margin: 16px 0 110px;
+    padding: 0 40px;
+  }
+}
+
+@media (min-width: 950px) {
+  .house-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1130px) {
+  .house-list {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 1640px) {
+  .house-list {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media (min-width: 1880px) {
+  .house-list {
+    grid-template-columns: repeat(6, 1fr);
+  }
 }
