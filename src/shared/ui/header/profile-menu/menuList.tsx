@@ -16,22 +16,22 @@ const MenuList = ({ isLoggedIn, onLogout, onLoginOpen, onClose }: MenuListProps)
     return (
       <ul className={styles['profile-menu']}>
         <li>
-          <button className={styles['profile-menu-button']}>
+          <button className={`${styles['profile-menu-button']} ${styles['profile-menu-button--medium']}`}>
             {t('messages')}
           </button>
         </li>
         <li>
-          <button className={styles['profile-menu-button']}>
+          <button className={`${styles['profile-menu-button']} ${styles['profile-menu-button--medium']}`}>
             {t('notifications')}
           </button>
         </li>
         <li>
-          <button className={styles['profile-menu-button']}>
+          <button className={`${styles['profile-menu-button']} ${styles['profile-menu-button--medium']}`}>
             {t('trips')}
           </button>
         </li>
         <li>
-          <button className={styles['profile-menu-button']}>
+          <button className={`${styles['profile-menu-button']} ${styles['profile-menu-button--medium']}`}>
             {t('wishlists')}
           </button>
         </li>
@@ -49,7 +49,7 @@ const MenuList = ({ isLoggedIn, onLogout, onLoginOpen, onClose }: MenuListProps)
     <ul className={styles['profile-menu']}>
       <li>
         <button
-          className={styles['profile-menu-button']}
+          className={`${styles['profile-menu-button']} ${styles['profile-menu-button--medium']}`}
           onClick={() => {
             onLoginOpen();
             onClose();

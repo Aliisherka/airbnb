@@ -11,10 +11,16 @@
     padding: 12px 16px;
     width: 100%;
     text-align: start;
+    font-size: $font-size-sm;
+    line-height: $line-height-xs;
 
     &:hover {
       background-color: $gray-100;
     }
+  }
+
+  .profile-menu-button--medium {
+    font-weight: $font-weight-medium;
   }
 
   .divider {

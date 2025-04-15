@@ -44,13 +44,13 @@ const HouseCard: React.FC<HouseProps> = ({ title, distance, price, rating, image
       />
       <div className={styles['card-body']}>
         <div>
-          <h2>{title}</h2>
+          <h2 className={styles['title']}>{title}</h2>
           <p className={styles['distance']}>{renderDistance()}</p>
-          <p>{price} {t('night')}</p>
+          <p className={styles['price']}>{price} {t('night')}</p>
         </div>
         <div className={styles['rating']}>
           <IconSvg name='star' width='12px' height='12px'/>
-          <p>{rating}</p>
+          <p >{rating}</p>
         </div>
       </div>
     </div>
