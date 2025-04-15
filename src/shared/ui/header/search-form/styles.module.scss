@@ -52,14 +52,18 @@
     }
 
     .label {
-      font-size: 0.8rem;
+      font-size: $font-size-xs;
       color: $gray-900;
+      font-weight: $font-weight-medium;
+      line-height: $line-height-sm;
     }
   
     .input {
       border: none;
       outline: none;
-      font-size: 1rem;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      line-height: $line-height-xs;
       color: $gray-900;
       background-color: transparent;
 

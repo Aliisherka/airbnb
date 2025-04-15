@@ -28,7 +28,7 @@ export const LanguageSwitcher = () => {
       </button>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} width='1032px'>
         <div className={styles['locale-settings-tabs']}>
-          <button className={styles['tab']} aria-selected='true'>{t('language-and-region')}</button>
+          <button className={styles['settings-tab']} aria-selected='true'>{t('language-and-region')}</button>
         </div>
         <div className={styles['locale-tabs']}>
           <button

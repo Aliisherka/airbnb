@@ -82,15 +82,28 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    line-height: $line-height-xs;
+
+    .title {
+      font-size: $font-size-card;
+      font-weight: $font-weight-medium;
+      color: $gray-900;
+    }
 
     .distance {
+      font-size: $font-size-card;
       color: $gray-500;
+    }
+
+    .price {
+      font-size: $font-size-card;
     }
 
     .rating {
       display: flex;
       align-items: center;
       gap: 4px;
+      font-size: $font-size-card;
     }
   }
 }
