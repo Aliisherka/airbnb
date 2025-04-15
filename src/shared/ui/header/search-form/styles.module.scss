@@ -13,6 +13,10 @@
     background-color: $gray-200;
   }
 
+  @media (max-width: 929px) {
+    width: calc(847px - (929px - 100vw));
+  }
+
   .search-field {
     display: flex;
     flex-direction: column;
@@ -38,17 +42,22 @@
       background-color: $gray-200;
     }
 
-    &.location {
+    &.location,
+    &.guests {
       width: 280px;
+
+      @media (max-width: 929px) {
+        width: calc(280px - ((929px - 100vw) * 0.324));
+      }
     }
 
     &.arrival,
     &.departure {
       width: 140px;
-    }
 
-    &.guests {
-      width: 284px;
+      @media (max-width: 929px) {
+        width: calc(140px - ((929px - 100vw) * 0.1595));
+      }
     }
 
     .label {
@@ -66,6 +75,7 @@
       line-height: $line-height-xs;
       color: $gray-900;
       background-color: transparent;
+      text-overflow: ellipsis;
 
       &::placeholder {
         color: $gray-500;
