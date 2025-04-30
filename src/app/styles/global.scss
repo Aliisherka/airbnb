@@ -12,4 +12,8 @@ body {
   color: $gray-900;
   background-color: $background-light;
   overflow-x: hidden;
+
+  @media (max-width: 743px) {
+    background-color: $background-dark;
+  }
 }

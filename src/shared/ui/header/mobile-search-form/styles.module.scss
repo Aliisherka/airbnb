@@ -1,0 +1,105 @@
+@import '../../../../app/styles/index.scss';
+
+.location {
+  background: $background-light;
+  margin: 12px;
+  border-radius: 24px;
+
+  .title {
+    padding: 23px 24px 0;
+  }
+
+  .input-wrapper {
+    border: 1px solid $gray-400;
+    border-radius: 8px;
+    margin: 16px 25px;
+    padding: 0 20px;
+    height: 54px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    &.focused {
+      border-color: $gray-900;
+      box-shadow: 0 0 0 1px black;
+      background-color: $gray-100;
+    }
+
+    .icon-button {
+      border: none;
+      background: transparent;
+      padding: 0;
+      height: 16px;
+    }
+
+    .input {
+      border: none;
+      height: 100%;
+      width: 100%;
+
+      &:focus {
+        outline: none;
+        background-color: $gray-100;
+      }
+    }
+  }
+
+  .suggestion {
+    padding: 0 24px;
+
+    .text {
+      margin-bottom: 4px;
+      font-size: $font-size-xs;
+    }
+
+    .locations-wrapper {
+      max-height: 280px;
+      overflow: hidden;
+      position: relative;
+
+      &.expanded {
+        max-height: none;
+      }
+
+      .fade-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 32px;
+        background: linear-gradient(to top, white, rgba(255, 255, 255, 0.8));
+        pointer-events: none;
+      }
+
+      .show-more {
+        pointer-events: all;
+        border: none;
+        border-top: 1px solid $gray-300;
+        width: 100%;
+        height: 100%;
+        background-color: transparent;
+      }
+    }
+
+    .suggested-location {
+      padding: 8px 8px 8px 0;
+      font-size: $font-size-sm;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+
+      .img {
+        width: 56px;
+        height: 56px;
+      }
+
+      .country {
+        font-weight: $font-weight-medium;
+      }
+
+      .description {
+        margin-top: 2px;
+      }
+    }
+  }
+}

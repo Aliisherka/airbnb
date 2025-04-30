@@ -23,7 +23,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, width, children }
       >
         <div className={`${styles['modal-header']} ${title ? styles['has-title'] : ''}`}>
           <button className={styles['close-button']} onClick={onClose}>
-            <IconSvg name='close' width='16px' height='16px' />
+            <IconSvg name='close' className={styles['close-icon']}/>
           </button>
           {title && <h2 className={styles['modal-title']}>{title}</h2>}
         </div>
