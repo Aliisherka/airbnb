@@ -181,7 +181,7 @@ const SearchForm = () => {
       />
       
       <button type='submit' className={styles["search-button"]}>
-        <IconSvg name='search-icon' width='16px' height='16px' />
+        <IconSvg color='white' name='search-icon' width='16px' height='16px' />
       </button>
       {showCalendar && (
         <div ref={calendarRef} style={calendarStyle}>
