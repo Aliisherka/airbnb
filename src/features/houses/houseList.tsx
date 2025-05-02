@@ -7,7 +7,7 @@ const HouseList = ({ houses }: { houses: any[] }) => {
     <div className={styles['house-list']}>
       {houses.map((house) => (
         <HouseCard
-          key={house.id}
+          key={house._id}
           title={house.title}
           distance={house.distance}
           price={house.price}
