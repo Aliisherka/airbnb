@@ -32,5 +32,8 @@
   "baths": "baths",
   "loading-text": "Please wait, the server is starting. This may take up to 40 seconds because the server sleeps due to inactivity. Under normal conditions, the loading will be faster.",
   "where-to": "Where to?",
-  "suggested-destinations": "Suggested destinations"
+  "suggested-destinations": "Suggested destinations",
+  "start-your-search": "Start your search",
+  "clear-all": "Clear all",
+  "search": "Search"
 }
