@@ -7,8 +7,10 @@ import ProfileMenu from './profile-menu';
 import useIsMobile from '../../hooks/useIsMobile';
 import Modal from '../modal';
 import MobileSearchForm from './mobile-search-form';
+import { useTranslation } from 'react-i18next';
 
 export const Header = () => {
+  const { t } = useTranslation();
   const isMobile = useIsMobile();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -25,11 +27,17 @@ export const Header = () => {
       <>
         <div className={styles['mobile-header']}>
           <button className={styles['mobile-search-button']} onClick={handleOpenModal}>
-            Start your search
+            <IconSvg
+              color='black' 
+              width='12' 
+              height='12' 
+              name='search-icon'
+            />
+            <span>{t('start-your-search')}</span>
           </button>
         </div>
         <Modal isOpen={isModalOpen} onClose={handleCloseModal} width='100%'>
-          <MobileSearchForm />
+          <MobileSearchForm onClose={() => setIsModalOpen(false)}/>
         </Modal>
       </>
     )
