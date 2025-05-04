@@ -86,7 +86,7 @@ const MobileSearchForm = ({ onClose }: MobileSearchFormProps) => {
                     setExpanded(true)
                   }}
                 >
-                  <IconSvg name='chevron-down' width='16' height='16'/>
+                  <IconSvg name='chevron-down' width='16' height='16' color='black' />
                 </button>
               </div>
             )}

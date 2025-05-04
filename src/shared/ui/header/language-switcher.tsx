@@ -24,7 +24,7 @@ export const LanguageSwitcher = () => {
         className={styles['language-button']}
         onClick={() => setIsModalOpen(true)}
       >
-        <IconSvg name='language' width='16px' height='16px'/>
+        <IconSvg name='language' width='16px' height='16px' color='black' />
       </button>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} width='1032px'>
         <div className={styles['locale-settings-tabs']}>
