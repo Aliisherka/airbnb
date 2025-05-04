@@ -11,7 +11,7 @@ interface UserButtonProps {
 const UserButton = ({ onClick, userInitial, isLoggedIn }: UserButtonProps) => {
   return (
     <button className={styles['user-button']} onClick={onClick}>
-      <IconSvg name='user-menu' width='16px' height='16px' />
+      <IconSvg name='user-menu' width='16px' height='16px' color='black' />
       {isLoggedIn ? (
         <div className={styles['user-avatar']}>{userInitial}</div>
       ) : (

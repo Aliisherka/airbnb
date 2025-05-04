@@ -41,12 +41,12 @@ const ImageCarousel: React.FC<Props> = ({ title, images, onClick }) => {
         <>
           {currentImageIndex > 0 && (
             <button className={styles['prev-button']} onClick={(e) => { e.stopPropagation(); handlePrevImage(); }}>
-              <IconSvg name='chevron-left' width='16px' height='16px' />
+              <IconSvg name='chevron-left' width='16px' height='16px' color='black' />
             </button>
           )}
           {currentImageIndex < images.length - 1 && (
             <button className={styles['next-button']} onClick={(e) => { e.stopPropagation(); handleNextImage(); }}>
-              <IconSvg name='chevron-right' width='16px' height='16px' />
+              <IconSvg name='chevron-right' width='16px' height='16px' color='black' />
             </button>
           )}
         </>

@@ -126,6 +126,8 @@
       @extend %form-button-text;
       text-decoration: underline;
       padding: 10px;
+      color: $gray-900;
+      background-color: transparent;
     }
 
     .search-button {
