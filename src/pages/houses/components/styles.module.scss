@@ -1,0 +1,63 @@
+@import '../../../app/index.scss';
+
+.image-wrapper {
+  position: relative;
+  overflow: hidden;
+
+  .back-button {
+    position: absolute;
+    z-index: 1;
+    left: 12px;
+    top: 14px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $background-light;
+  }
+
+  .carousel-container {
+    overflow: hidden;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+  }
+  
+  .carousel-track {
+    display: flex;
+    transition: transform 0.3s ease;
+    height: 100%;
+  }
+  
+  .carousel-image {
+    width: 100%;
+    height: 100%;
+    flex-shrink: 0;
+    object-fit: cover;
+  }
+}
+
+.title {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-xs;
+  padding: 24px 24px 16px;
+}
+
+.overview {
+  padding: 0 24px;
+
+  &-title {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    line-height: $line-height-sm;
+  }
+
+  &-list {
+    display: flex;
+    gap: 10px;
+    list-style: none;
+  }
+}

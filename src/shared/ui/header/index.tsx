@@ -8,12 +8,14 @@ import useIsMobile from '../../hooks/useIsMobile';
 import Modal from '../modal';
 import MobileSearchForm from './mobile-search-form';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export const Header = () => {
   const { t } = useTranslation();
   const isMobile = useIsMobile();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { pathname } = useLocation();
+  const isHousePage = pathname.includes('/house/');
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -24,6 +26,7 @@ export const Header = () => {
   }
 
   if (isMobile) {
+    if (isHousePage) return null;
     return (
       <>
         <div className={styles['mobile-header']}>
@@ -55,7 +58,7 @@ export const Header = () => {
           <ProfileMenu />
         </div>
       </div>
-      <SearchForm />
+      {!isHousePage && <SearchForm />}
     </div>
   )
 }
