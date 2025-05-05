@@ -8,6 +8,7 @@ import useIsMobile from '../../hooks/useIsMobile';
 import Modal from '../modal';
 import MobileSearchForm from './mobile-search-form';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 export const Header = () => {
   const { t } = useTranslation();
@@ -46,7 +47,9 @@ export const Header = () => {
   return (
     <div className={styles['header']}>
       <div className={styles['container']}>
-        <IconSvg name='logo' width='108px'/>
+        <Link to={'/'} className={styles['logo']}>
+          <IconSvg name='logo' width='108px'/>
+        </Link>
         <div className={styles['actions']}>
           <LanguageSwitcher />
           <ProfileMenu />

@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { searchHouses } from '../../../../app/slices/housesSlice';
-import { useAppDispatch } from '../../../../app/store/hooks';
+import { useSearchParams } from 'react-router-dom';
 import IconSvg from '../../../assets/icons/icon';
 import { suggestedLocations } from '../../../data/suggested-locations';
 import styles from './styles.module.scss';
@@ -12,18 +11,23 @@ interface MobileSearchFormProps {
 }
 
 const MobileSearchForm = ({ onClose }: MobileSearchFormProps) => {
-  const dispatch = useAppDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { t } = useTranslation();
   const [isFocused, setIsFocused] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [query, setQuery] = useState('');
+
+  useEffect(() => {
+    const locationParams = searchParams.get('location') || '';
+    setQuery(locationParams);
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!query.trim()) return;
 
-    dispatch(searchHouses(query));
+    setSearchParams({ location: query });
     onClose();
   };
 
