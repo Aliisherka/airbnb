@@ -1,15 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { apiCall } from '../../shared/api';
-
-interface House {
-  id: string;
-  title: string;
-  price: string;
-  rating: number;
-  images: string[];
-  country: string;
-  city: string;
-}
+import { House } from '../../shared/types/house';
 
 interface InitialState {
   houses: House[];
