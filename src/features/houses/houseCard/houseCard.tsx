@@ -4,6 +4,8 @@ import IconSvg from '../../../shared/assets/icons/icon';
 import { getCurrentLanguage } from '../../../shared/lib/lang';
 import styles from './styles.module.scss';
 import ImageCarousel from './imageCarousel';
+import { useNavigate } from 'react-router-dom';
+import useIsMobile from '../../../shared/hooks/useIsMobile';
 
 type HouseProps = {
   title: string;
@@ -17,6 +19,8 @@ type HouseProps = {
 const HouseCard: React.FC<HouseProps> = ({ title, distance, price, rating, images, _id }) => {
   const { t } = useTranslation();
   const currentLang = getCurrentLanguage();
+  const isMobile = useIsMobile();
+  const navigate = useNavigate();
 
   const renderDistance = () => {
     if (currentLang === 'ru') {
@@ -29,7 +33,12 @@ const HouseCard: React.FC<HouseProps> = ({ title, distance, price, rating, image
   };
 
   const handleOpenHousePage = () => {
-    window.open(`/airbnb/#/house/${_id}`, '_blank');
+    const path = `/house/${_id}`;
+    if (isMobile) {
+      navigate(path);
+    } else {
+      window.open(`/airbnb/#/house/${_id}`, '_blank');
+    }
   };
 
   return (
