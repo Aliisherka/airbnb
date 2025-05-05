@@ -5,11 +5,14 @@ import styles from './styles.module.scss';
 import { getHouse } from '../../shared/api/houses';
 import IconSvg from '../../shared/assets/icons/icon';
 import { useTranslation } from 'react-i18next';
+import useIsMobile from '../../shared/hooks/useIsMobile';
+import HousePageMobile from './components/housePageMobile';
 import { House } from '../../shared/types/house';
 
 const HousePage = () => {
   const { t } = useTranslation();
   const { id } = useParams();
+  const isMobile = useIsMobile();
   const [house, setHouse] = useState<House | null>(null);
   
   useEffect(() => {
@@ -21,6 +24,12 @@ const HousePage = () => {
   }, [id]);
 
   if (!house) return <p>Загрузка...</p>;
+
+  if (isMobile) {
+    return (
+      <HousePageMobile house={house}/>
+    )
+  }
 
   return (
     <div className={styles['container']}>
