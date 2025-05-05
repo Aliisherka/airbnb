@@ -2,17 +2,25 @@ import React, { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 import HouseList from '../../features/houses/houseList';
 import { useAppDispatch, useAppSelector } from '../../app/store/hooks';
-import { fetchHouses } from '../../app/slices/housesSlice';
+import { fetchHouses, searchHouses } from '../../app/slices/housesSlice';
 import { LoadingScreen } from '../../shared/ui/loading-screen';
+import { useSearchParams } from 'react-router-dom';
 
 const Home = () => {
   const dispatch = useAppDispatch();
   const { houses, searchResults, status } = useAppSelector(state => state.houses);
   const [showLoader, setShowLoader] = useState(false);
 
+  const [params] = useSearchParams();
+  const location = params.get('location');
+
   useEffect(() => {
-    dispatch(fetchHouses());
-  }, [dispatch]);
+    if (location) {
+      dispatch(searchHouses(location));
+    } else {
+      dispatch(fetchHouses());
+    }
+  }, [location ,dispatch]);
 
   useEffect(() => {
     let timer: NodeJS.Timeout | null = null;

@@ -4,17 +4,16 @@ import IconSvg from '../../../assets/icons/icon';
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
-import { searchHouses } from '../../../../app/slices/housesSlice';
-import { useAppDispatch } from '../../../../app/store/hooks';
 import LocationInput from './location-input';
 import CalendarInput from './calendar-input';
 import GuestsInput from './guests-input';
 import Divider from '../../divider';
 import { useDates } from '../../../hooks/useDates';
 import useFetchLocations from '../../../hooks/useFetchLocations';
+import { useSearchParams } from 'react-router-dom';
 
 const SearchForm = () => {
-  const dispatch = useAppDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { dates, setArrivalDate, setDepartureDate } = useDates();
   
   const [query, setQuery] = useState('');
@@ -29,6 +28,11 @@ const SearchForm = () => {
   const containerRef = useRef(null);
   const calendarRef = useRef(null);
   const guestsPopupRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const locationParams = searchParams.get('location') || '';
+    setQuery(locationParams);
+  }, [searchParams]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -108,7 +112,7 @@ const SearchForm = () => {
     
     if (!query.trim()) return;
 
-    dispatch(searchHouses(query));
+    setSearchParams({ location: query });
   };
 
   return (
