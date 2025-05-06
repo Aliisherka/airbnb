@@ -13,6 +13,7 @@ import { Link, useLocation } from 'react-router-dom';
 export const Header = () => {
   const { t } = useTranslation();
   const isMobile = useIsMobile();
+  const isNarrowScreen = useIsMobile(1128)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { pathname } = useLocation();
   const isHousePage = pathname.includes('/house/');
@@ -51,7 +52,11 @@ export const Header = () => {
     <div className={styles['header']}>
       <div className={styles['container']}>
         <Link to={'/'} className={styles['logo']}>
-          <IconSvg name='logo' width='108px'/>
+          <IconSvg 
+            name={isNarrowScreen ? 'logo' : 'full-logo'} 
+            width={isNarrowScreen ? '36px' : '102px'} 
+            height={isNarrowScreen ? '38px' : '32px'}
+          />
         </Link>
         <div className={styles['actions']}>
           <LanguageSwitcher />
