@@ -31,6 +31,7 @@
   "beds": "lůžek",
   "baths": "koupelna",
   "loading-text": "Počkejte, server se spouští. Může to trvat až 40 sekund, protože server usíná při nečinnosti. V běžných podmínkách bude načítání rychlejší.",
+  "server-waking-up": "Načítání dat… Server se může probouzet. Prosím, čekejte.",
   "where-to": "Kam to bude?",
   "suggested-destinations": "Doporučené destinace",
   "start-your-search": "Začít vyhledávat",
