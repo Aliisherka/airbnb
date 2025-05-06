@@ -8,15 +8,19 @@ import useIsMobile from '../../hooks/useIsMobile';
 import Modal from '../modal';
 import MobileSearchForm from './mobile-search-form';
 import { useTranslation } from 'react-i18next';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 export const Header = () => {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const isMobile = useIsMobile();
   const isNarrowScreen = useIsMobile(1128)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { pathname } = useLocation();
   const isHousePage = pathname.includes('/house/');
+
+  const [params] = useSearchParams();
+  const location = params.get('location');
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -31,15 +35,31 @@ export const Header = () => {
     return (
       <>
         <div className={styles['mobile-header']}>
-          <button className={styles['mobile-search-button']} onClick={handleOpenModal}>
-            <IconSvg
-              color='black' 
-              width='12' 
-              height='12' 
-              name='search-icon'
-            />
-            <span>{t('start-your-search')}</span>
-          </button>
+          {location ? (
+            <div className={styles['mobile-header-location']}>
+              <button onClick={() => navigate(-1)} className={styles['mobile-back-button']}>
+                <IconSvg
+                  color='black' 
+                  width='16' 
+                  height='16' 
+                  name='back'
+                />
+              </button>
+              <button className={styles['mobile-search-button']} onClick={handleOpenModal}>
+                <span>{location}</span>
+              </button>
+            </div>
+          ) : (
+            <button className={styles['mobile-search-button']} onClick={handleOpenModal}>
+              <IconSvg
+                color='black' 
+                width='12' 
+                height='12' 
+                name='search-icon'
+              />
+              <span>{t('start-your-search')}</span>
+            </button>
+          )}
         </div>
         <Modal isOpen={isModalOpen} onClose={handleCloseModal} width='100%'>
           <MobileSearchForm onClose={() => setIsModalOpen(false)}/>
