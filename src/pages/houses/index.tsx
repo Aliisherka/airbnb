@@ -8,22 +8,31 @@ import { useTranslation } from 'react-i18next';
 import useIsMobile from '../../shared/hooks/useIsMobile';
 import HousePageMobile from './components/housePageMobile';
 import { House } from '../../shared/types/house';
+import { LoadingScreen } from '../../shared/ui/loading-screen';
 
 const HousePage = () => {
   const { t } = useTranslation();
   const { id } = useParams();
   const isMobile = useIsMobile();
   const [house, setHouse] = useState<House | null>(null);
+  const [loading, setLoading] = useState(true);
   
   useEffect(() => {
-    if (!id) return;
-    
-    getHouse(id).then((data) => {
-      if (data) setHouse(data);
-    });
+    const fetchHouse = async () => {
+      setLoading(true);
+      const data = await getHouse(id);
+      if (data) {
+        setHouse(data);
+      }
+      setLoading(false);
+    };
+
+    if (id) {
+      fetchHouse();
+    }
   }, [id]);
 
-  if (!house) return <p>Загрузка...</p>;
+  if (!house) return <LoadingScreen loading={loading} text={t('server-waking-up')}/>;
 
   if (isMobile) {
     return (
