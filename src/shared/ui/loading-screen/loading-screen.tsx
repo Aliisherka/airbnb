@@ -1,9 +1,35 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next';
-import styles from './styles.module.scss'
+import styles from './styles.module.scss';
 
-const LoadingScreen = () => {
+interface LoadingScreenProps {
+  text?: string;
+  loading?: boolean;
+}
+
+const LoadingScreen = ({ text, loading = true }: LoadingScreenProps) => {
   const { t } = useTranslation();
+  const [showLoader, setShowLoader] = useState(false);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout | null = null;
+
+    if (loading) {
+      timer = setTimeout(() => {
+        setShowLoader(true);
+      }, 600);
+    } else {
+      if (timer) clearTimeout(timer);
+      setShowLoader(false);
+    }
+
+    return () => {
+      if (timer) clearTimeout(timer);
+    }
+  }, [loading]);
+
+  if (!showLoader) return null;
+  
   return (
     <div className={styles['loading-screen']}>
       <div className={styles['circle-container']}>
@@ -24,7 +50,7 @@ const LoadingScreen = () => {
         </svg>
       </div>
       <p className={styles['loading-text']}>
-        {t('loading-text')}
+        {text || t('loading-text')}
       </p>
     </div>
   )
