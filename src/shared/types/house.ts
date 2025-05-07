@@ -9,4 +9,8 @@ export interface House {
   createdAt: string;
   updatedAt: string;
   __v: number;
+  guests: number;
+  bedrooms: number;
+  beds: number;
+  bathrooms: number;
 }

@@ -17,6 +17,7 @@ i18n.use(Backend)
         backend: {
             loadPath: `${import.meta.env.BASE_URL}locales/{{lng}}/{{ns}}.json`,
         },
+        pluralSeparator: '_',
     })
 
 export default i18n
