@@ -1,6 +1,7 @@
 {
   "name": "airbnb--2",
   "private": true,
+  "homepage": "https://Aliisherka.github.io/airbnb",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
