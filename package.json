@@ -11,7 +11,8 @@
     "deploy": "gh-pages -d dist -u \"github-actions-bot <support+actions@github.com>\"",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "vitest"
+    "test": "vitest run",
+    "test:dev": "vitest"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.6.1",
