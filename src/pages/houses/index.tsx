@@ -70,7 +70,7 @@ const HousePage = () => {
             U
           </div>
           <div className={styles['user-description']}>
-            <h4>Хозяин:</h4>
+            <h4>{t('hosted-by')}</h4>
             <p>6 месяцев принимает гостей</p>
           </div>
         </div>
