@@ -57,10 +57,10 @@ const HousePage = () => {
         <div className={styles['overview']}>
           <h3>{t('entire-villa')} {house.title}, {house.country}</h3>
           <ul className={styles['overview-list']}>
-            <li>{t('guests')}</li>
-            <li>{t('bedrooms')}</li>
-            <li>{t('beds')}</li>
-            <li>{t('baths')}</li>
+            <li>{t('guests', { count: house.guests })}</li>
+            <li>{t('bedrooms', { count: house.bedrooms })}</li>
+            <li>{t('beds', { count: house.beds })}</li>
+            <li>{t('baths', { count: house.bathrooms })}</li>
           </ul>
           <IconSvg name='star' width='16' height='16'/>
           <a href='#'>отзыв</a>
