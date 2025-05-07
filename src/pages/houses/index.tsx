@@ -43,7 +43,7 @@ const HousePage = () => {
   return (
     <div className={styles['container']}>
       <div className={styles['text']}>
-        <h2>text</h2>
+        <h2>{house.title}</h2>
       </div>
       <div className={styles['galery']}>
         <img className={styles['main-image']} src={house.images[0]} alt='Main image' />
@@ -55,7 +55,7 @@ const HousePage = () => {
       </div>
       <div className={styles['information']}>
         <div className={styles['overview']}>
-          <h3>{t('entire-villa')} {house.title}, {house.country}</h3>
+          <h3>{t('entire-villa')} {house.city}, {house.country}</h3>
           <ul className={styles['overview-list']}>
             <li>{t('guests', { count: house.guests })}</li>
             <li>{t('bedrooms', { count: house.bedrooms })}</li>
