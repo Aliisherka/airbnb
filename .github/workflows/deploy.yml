@@ -1,10 +1,8 @@
 name: Frontend CI
 
-
-
 on:
   workflow_run:
-    workflows: ["Run Frontend Tests"]
+    workflows: ["Frontend Tests"]
     types:
       - completed
 
