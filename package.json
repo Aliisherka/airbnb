@@ -12,6 +12,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest run",
+    "test:integration": "vitest run --reporter verbose --config vitest.integration.config.ts",
     "test:dev": "vitest"
   },
   "dependencies": {
