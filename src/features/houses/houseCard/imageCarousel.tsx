@@ -37,6 +37,7 @@ const ImageCarousel: React.FC<Props> = ({ title, images, onClick }) => {
   return (
     <div
       className={styles['image-container']}
+      data-testid='image-container'
       onMouseEnter={() => setShowArrows(true)}
       onMouseLeave={() => setShowArrows(false)}
       onClick={onClick}
@@ -45,7 +46,8 @@ const ImageCarousel: React.FC<Props> = ({ title, images, onClick }) => {
       onTouchEnd={isMobile ? handleTouchEnd : undefined}
     >
       <div 
-        className={styles['slider']} 
+        className={styles['slider']}
+        data-testid='slider'
         style={{
           transform: isMobile
             ? `translateX(calc(-${currentIndex * 100}% + ${offsetX}px))`
@@ -53,19 +55,19 @@ const ImageCarousel: React.FC<Props> = ({ title, images, onClick }) => {
         }}
       >
         {images.map((image, index) => (
-          <img key={index} className={styles['card-image']} src={image} alt={title} />
+          <img key={index} className={styles['card-image']} src={image} alt={`${title}-${index}`} />
         ))}
       </div>
 
       {!isMobile && showArrows && images.length > 1 && (
         <>
           {currentIndex > 0 && (
-            <button className={styles['prev-button']} onClick={(e) => { e.stopPropagation(); handlePrevImage(); }}>
+            <button data-testid='chevron-left' className={styles['prev-button']} onClick={(e) => { e.stopPropagation(); handlePrevImage(); }}>
               <IconSvg name='chevron-left' width='16px' height='16px' color='black' />
             </button>
           )}
           {currentIndex < images.length - 1 && (
-            <button className={styles['next-button']} onClick={(e) => { e.stopPropagation(); handleNextImage(); }}>
+            <button data-testid='chevron-right' className={styles['next-button']} onClick={(e) => { e.stopPropagation(); handleNextImage(); }}>
               <IconSvg name='chevron-right' width='16px' height='16px' color='black' />
             </button>
           )}
@@ -76,6 +78,7 @@ const ImageCarousel: React.FC<Props> = ({ title, images, onClick }) => {
         {images.map((_, index) => (
           <div
             key={index}
+            data-testid='carousel-indicator'
             className={`${styles['indicator']} ${currentIndex === index ? styles['active'] : ''}`}
           ></div>
         ))}
