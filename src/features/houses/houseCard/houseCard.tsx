@@ -36,6 +36,7 @@ const HouseCard: React.FC<House> = ({ title, price, rating, images, _id }) => {
   return (
     <div
       className={styles['card-content']}
+      data-testid='house-card'
       onClick={handleOpenHousePage}
     >
       <ImageCarousel
@@ -45,13 +46,13 @@ const HouseCard: React.FC<House> = ({ title, price, rating, images, _id }) => {
       />
       <div className={styles['card-body']}>
         <div>
-          <h2 className={styles['title']}>{title}</h2>
+          <h2 data-testid='house-title' className={styles['title']}>{title}</h2>
           {/* <p className={styles['distance']}>{renderDistance()}</p> */}
-          <p className={styles['price']}>{price} {t('night')}</p>
+          <p data-testid='house-prices' className={styles['price']}>{price} {t('night')}</p>
         </div>
         <div className={styles['rating']}>
           <IconSvg name='star' width='12px' height='12px'/>
-          <p >{rating}</p>
+          <p data-testid='house-ratings' >{rating}</p>
         </div>
       </div>
     </div>
