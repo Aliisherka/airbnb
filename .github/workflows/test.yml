@@ -7,9 +7,8 @@ on:
     branches: [master]
 
 jobs:
-  test:
+  unit-tests:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -25,5 +24,30 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Run tests
-        run: npm run test
+      - name: Run unit tests
+        run: npm run test:unit
+
+  integration-tests:
+    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    needs: unit-tests
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.11.0
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Wake up backend
+        run: curl https://airbnb-backend-qwox.onrender.com/houses || true
+
+      - name: Run integration tests
+        run: npm run test:integration
