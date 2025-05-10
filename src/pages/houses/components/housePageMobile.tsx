@@ -29,7 +29,7 @@ export const HousePageMobile = ({ house }: HousePageMobileProps) => {
   return (
     <>
       <div className={styles['image-wrapper']}>
-        <button className={styles['back-button']} onClick={handleBack}>
+        <button className={styles['back-button']} onClick={handleBack} data-testid='back-button'>
           <IconSvg name='chevron-left' color='black' width='24px' height='24px'/>
         </button>
 

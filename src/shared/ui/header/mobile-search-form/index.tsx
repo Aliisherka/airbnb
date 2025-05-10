@@ -101,7 +101,7 @@ const MobileSearchForm = ({ onClose }: MobileSearchFormProps) => {
         <button type='button' className={styles["clear-button"]} onClick={() => setQuery('')}>
           {t('clear-all')}
         </button>
-        <button type='submit' className={styles["search-button"]}>
+        <button type='submit' className={styles["search-button"]} data-testid='search-button'>
           <IconSvg color='white' name='search-icon' width='16px' height='16px' />
           <p>{t('search')}</p>
         </button>
