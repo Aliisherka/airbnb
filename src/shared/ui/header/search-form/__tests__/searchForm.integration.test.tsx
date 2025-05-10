@@ -1,3 +1,4 @@
+vi.unmock('react-i18next')
 import { render, screen, fireEvent } from '@testing-library/react'
 import React from 'react'
 import { I18nextProvider } from 'react-i18next'
@@ -18,7 +19,7 @@ i18n.init({
 })
 
 import SearchForm from '..'
-import { expect, test, describe } from 'vitest'
+import { expect, test, describe, vi } from 'vitest'
 
 describe('SearchForm tests', () => {
   test('renders the search form correctly', () => {
