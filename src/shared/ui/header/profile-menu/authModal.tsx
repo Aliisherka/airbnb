@@ -44,7 +44,7 @@ const AuthModal = ({
     <Modal isOpen={isOpen} onClose={onClose} width='568px' title={t('log-in-or-sign-up')}>
       <div className={styles['auth-modal']}>
         <h2 className={styles['auth-modal-title']}>{t('welcome-to-airbnb')}</h2>
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} data-testid='login-form'>
           <div className={styles['country-container']}>
             <label htmlFor='country-select' className={styles['country-label']}>
               {t('country-code')}
