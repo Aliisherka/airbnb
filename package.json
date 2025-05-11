@@ -11,7 +11,11 @@
     "deploy": "gh-pages -d dist -u \"github-actions-bot <support+actions@github.com>\"",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "vitest run",
+    "test:e2e": "cypress run",
+    "test:e2e:dev": "cypress open",
+    "test:unit": "vitest run --reporter verbose --config vitest.unit.config.ts",
+    "test:integration": "vitest run --reporter verbose --config vitest.integration.config.ts",
+    "test": "npm run test:unit && npm run test:integration",
     "test:dev": "vitest"
   },
   "dependencies": {
@@ -37,6 +41,7 @@
     "@types/react-date-range": "^1.4.9",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.2",
+    "cypress": "^14.3.3",
     "eslint": "^9.11.1",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.12",

@@ -10,10 +10,10 @@ interface UserButtonProps {
 
 const UserButton = ({ onClick, userInitial, isLoggedIn }: UserButtonProps) => {
   return (
-    <button className={styles['user-button']} onClick={onClick}>
+    <button className={styles['user-button']} onClick={onClick} data-testid='user-button'>
       <IconSvg name='user-menu' width='16px' height='16px' color='black' />
       {isLoggedIn ? (
-        <div className={styles['user-avatar']}>{userInitial}</div>
+        <div className={styles['user-avatar']} data-testid='user-avatar'>{userInitial}</div>
       ) : (
         <IconSvg name='user' width='32px' height='32px' />
       )}
