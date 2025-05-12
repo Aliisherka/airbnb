@@ -100,6 +100,7 @@ const ProfileMenu = () => {
         }
         isOpen={isMenuOpen}
         onClose={handleMenuClose}
+        positionStyle={{ right: '0', top: '58px' }}
       >
       <MenuList
         isLoggedIn={!!user}
