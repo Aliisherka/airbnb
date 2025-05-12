@@ -1,4 +1,4 @@
-@import './global.scss';
-@import './color-variables.scss';
-@import './text.scss';
-@import './font.scss';
+@forward './color-variables';
+@forward './global';
+@forward './text';
+@forward './font';
