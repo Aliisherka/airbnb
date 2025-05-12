@@ -66,6 +66,7 @@ const LocationInput = ({
         }
         isOpen={isOpen && suggestions.length > 0}
         onClose={onCloseDropdown}
+        positionStyle={{ left: '-25px', top: '58px' }}
       >
         <ul className={styles['dropdown-list']}>
           {suggestions.map((place, index) => (

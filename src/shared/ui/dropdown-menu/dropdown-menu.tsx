@@ -6,9 +6,10 @@ interface DropdownMenuProps {
   children: ReactNode;
   isOpen: boolean;
   onClose: () => void;
+  positionStyle?: React.CSSProperties;
 }
 
-const DropdownMenu = ({ button, children, isOpen, onClose }: DropdownMenuProps) => {
+const DropdownMenu = ({ button, children, isOpen, onClose, positionStyle = {} }: DropdownMenuProps) => {
   const menuRef = useRef<HTMLDivElement>(null);
 
   const handleClickOutside = (e: MouseEvent) => {
@@ -29,7 +30,14 @@ const DropdownMenu = ({ button, children, isOpen, onClose }: DropdownMenuProps) 
   return (
     <div className={styles['dropdown-container']} ref={menuRef}>
       <div>{button}</div>
-      {isOpen && <div className={styles['dropdown-menu']}>{children}</div>}
+      {isOpen && (
+        <div 
+          className={styles['dropdown-menu']}
+          style={positionStyle}
+        >
+          {children}
+        </div>
+      )}
     </div>
   );
 };
