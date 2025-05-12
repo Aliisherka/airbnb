@@ -18,4 +18,16 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: './src/setupTests.ts',
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@use "src/app/styles" as *;`,
+      },
+    },
+  },
+  resolve: {
+    alias: {
+      src: path.resolve(__dirname, './src'),
+    },
+  }
 })

@@ -1,6 +1,5 @@
 import React from 'react'
 import { withProviders } from './providers'
-import './index.scss'
 import { Provider } from 'react-redux'
 import { store } from './store'
 import { Router } from './router'
