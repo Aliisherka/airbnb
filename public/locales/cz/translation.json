@@ -44,5 +44,19 @@
   "suggested-destinations": "Doporučené destinace",
   "start-your-search": "Začít vyhledávat",
   "clear-all": "Zrušit vše",
-  "search": "Hledat"
+  "search": "Hledat",
+  "adults": "Dospělí",
+  "ages-13-or-above": "13 let nebo starší",
+  "children": "Děti",
+  "ages-2-12": "Věk 2 až 12 let",
+  "infants": "Kojenci",
+  "under-2": "Mladší než 2 roky",
+  "pets": "Domácí mazlíčci",
+  "bringing-a-service-animal?": "Chceš si přivést služební zvíře?",
+  "infants_one": "{{count}} kojenec",
+  "infants_few": "{{count}} kojenci",
+  "infants_many": "{{count}} kojenců",
+  "pets_one": "{{count}} domácí mazlíček",
+  "pets_few": "{{count}} domácí mazlíčci",
+  "pets_many": "{{count}} domácí mazlíčků"
 }

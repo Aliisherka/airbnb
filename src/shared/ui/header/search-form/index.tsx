@@ -53,9 +53,7 @@ const SearchForm = () => {
         !containerRef.current.contains(event.target as Node)
       ) {
         setShowGuestsPopup(false);
-        if (focusField === 'guests') {
-          setFocusField(null);
-        }
+        setFocusField(null);
       }
     };
 

@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useGuests } from '../../../hooks/useGuests';
+import DropdownMenu from '../../dropdown-menu/dropdown-menu';
+import GuestCounterItem from './guest-counter-item';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -23,8 +26,15 @@ const GuestsInput: React.FC<Props> = ({
 
 }) => {
   const { t } = useTranslation();
-  const [adults, setAdults] = useState(0);
-  const [children, setChildren] = useState(0);
+  const {
+    adults,
+    children,
+    infants,
+    pets,
+    increment,
+    decrement,
+    guestsString,
+  } = useGuests();
 
   const toggleGuestsPopup = () => {
     if (focusField === 'guests') {
@@ -34,26 +44,6 @@ const GuestsInput: React.FC<Props> = ({
       setFocusField('guests');
       setShowGuestsPopup(true);
     }
-  };
-
-  const guestsString = () => {
-    const guestsCount = adults + children;
-    if (guestsCount === 0) return '';
-    let str = `${adults} взросл${adults > 1 ? 'ых' : 'ый'}`;
-    if (children > 0) {
-      str += `, ${children} дет${children > 1 ? 'ей' : 'ёныш'}`;
-    }
-    return str;
-  };
-
-  const incrementAdults = () => setAdults(adults + 1);
-  const decrementAdults = () => {
-    if (adults > 1) setAdults(adults - 1);
-  };
-
-  const incrementChildren = () => setChildren(children + 1);
-  const decrementChildren = () => {
-    if (children > 0) setChildren(children - 1);
   };
 
   return (
@@ -68,52 +58,56 @@ const GuestsInput: React.FC<Props> = ({
         <label htmlFor='guests' className={styles['label']}>
           {t('who')}
         </label>
-        <input
-          type='text'
-          id='guests'
-          name='guests'
-          placeholder={t('add-guests')}
-          className={styles['input']}
-          onClick={toggleGuestsPopup}
-          value={guestsString()}
-          readOnly
-        />
-      </div>
-      {showGuestsPopup && (
-        <div
-          ref={guestsPopupRef}
-          style={{
-            position: 'absolute',
-            top: '100%',
-            right: '0',
-            marginTop: '8px',
-            zIndex: 1001,
-            padding: '1rem',
-            background: '#fff',
-            border: '1px solid #ddd',
-            borderRadius: '16px',
-            boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-          }}
+        <DropdownMenu
+          button={
+            <input
+              type='text'
+              id='guests'
+              name='guests'
+              placeholder={t('add-guests')}
+              className={styles['input']}
+              onClick={toggleGuestsPopup}
+              value={guestsString()}
+              readOnly
+            />
+          }
+          isOpen={showGuestsPopup}
+          onClose={() => {setShowGuestsPopup(false)}}
+          positionStyle={{ right: '0', top: '58px' }}
         >
-          <div style={{ marginBottom: '1rem' }}>
-            <label style={{ display: 'block', marginBottom: '4px' }}>
-              Взрослые
-            </label>
-            <button onClick={decrementAdults} disabled={adults <= 1}>-</button>
-            <span style={{ margin: '0 8px' }}>{adults}</span>
-            <button onClick={incrementAdults}>+</button>
+          <div className={styles['dropdown-list-guests']} ref={guestsPopupRef}>
+            <GuestCounterItem 
+              title={t('adults')} 
+              subtitle={t('ages-13-or-above')}
+              value={adults}
+              onIncrement={() => increment('adults')}
+              onDecrement={() => decrement('adults')}
+              isDecrementDisabled={adults <= 0 || (adults === 1 && children > 0 || infants > 0 || pets > 0)}
+            />
+            <GuestCounterItem 
+              title={t('children')} 
+              subtitle={t('ages-2-12')}
+              value={children}
+              onIncrement={() => increment('children')}
+              onDecrement={() => decrement('children')}
+            />
+            <GuestCounterItem 
+              title={t('infants')} 
+              subtitle={t('under-2')}
+              value={infants}
+              onIncrement={() => increment('infants')}
+              onDecrement={() => decrement('infants')}
+            />
+            <GuestCounterItem 
+              title={t('pets')} 
+              subtitle={t('bringing-a-service-animal?')}
+              value={pets}
+              onIncrement={() => increment('pets')}
+              onDecrement={() => decrement('pets')}
+            />
           </div>
-
-          <div style={{ marginBottom: '1rem' }}>
-            <label style={{ display: 'block', marginBottom: '4px' }}>
-              Дети
-            </label>
-            <button onClick={decrementChildren} disabled={children <= 0}>-</button>
-            <span style={{ margin: '0 8px' }}>{children}</span>
-            <button onClick={incrementChildren}>+</button>
-          </div>
-        </div>
-      )}
+        </DropdownMenu>
+      </div>
     </>
   );
 };

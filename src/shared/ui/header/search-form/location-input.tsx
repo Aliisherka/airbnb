@@ -56,7 +56,6 @@ const LocationInput = ({
             id='location'
             name='location'
             placeholder={t('search-destinations')}
-            required
             value={query}
             className={styles['input']}
             onChange={(e) => onQueryChange(e.target.value)}

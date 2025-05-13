@@ -40,5 +40,17 @@
   "suggested-destinations": "Suggested destinations",
   "start-your-search": "Start your search",
   "clear-all": "Clear all",
-  "search": "Search"
+  "search": "Search",
+  "adults": "Adults",
+  "ages-13-or-above": "Ages 13 or above",
+  "children": "Children",
+  "ages-2-12": "Ages 2-12",
+  "infants": "Infants",
+  "under-2": "Under 2",
+  "pets": "Pets",
+  "bringing-a-service-animal?": "Bringing a service animal?",
+  "infants_one": "{{count}} infant",
+  "infants_other": "{{count}} infants",
+  "pets_one": "{{count}} pet",
+  "pets_other": "{{count}} pets"
 }
