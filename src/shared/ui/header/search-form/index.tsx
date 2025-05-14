@@ -11,6 +11,7 @@ import Divider from '../../divider';
 import { useDates } from '../../../hooks/useDates';
 import useFetchLocations from '../../../hooks/useFetchLocations';
 import { useSearchParams } from 'react-router-dom';
+import { useGuests } from '../../../hooks/useGuests';
 
 const SearchForm = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -29,9 +30,21 @@ const SearchForm = () => {
   const calendarRef = useRef(null);
   const guestsPopupRef = useRef<HTMLDivElement>(null);
 
+  const guests = useGuests();
+
   useEffect(() => {
     const locationParams = searchParams.get('location') || '';
     setQuery(locationParams);
+
+    const adultsParam = parseInt(searchParams.get('adults') || '0', 10);
+    const childrenParam = parseInt(searchParams.get('children') || '0', 10);
+    const infantsParam = parseInt(searchParams.get('infants') || '0', 10);
+    const petsParam = parseInt(searchParams.get('pets') || '0', 10);
+
+    guests.setAdults(adultsParam);
+    guests.setChildren(childrenParam);
+    guests.setInfants(infantsParam);
+    guests.setPets(petsParam);
   }, [searchParams]);
 
   useEffect(() => {
@@ -107,10 +120,16 @@ const SearchForm = () => {
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!query.trim()) return;
 
-    setSearchParams({ location: query });
+    setFocusField(null);
+    
+    setSearchParams({ 
+      location: query,
+      adults: String(guests.adults),
+      children: String(guests.children),
+      infants: String(guests.infants),
+      pets: String(guests.pets),
+    });
   };
 
   return (
@@ -173,6 +192,7 @@ const SearchForm = () => {
       <Divider hidden={hoveredField === 'departure' || hoveredField === 'guests'} />
 
       <GuestsInput
+        guests={guests}
         focusField={focusField}
         setFocusField={setFocusField}
         showGuestsPopup={showGuestsPopup}

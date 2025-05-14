@@ -10,15 +10,21 @@ const Home = () => {
   const dispatch = useAppDispatch();
   const { houses, searchResults, status } = useAppSelector(state => state.houses);
   const [params] = useSearchParams();
-  const location = params.get('location');
+  const location = params.get('location') || '';
+  const adults = params.get('adults') || '0';
+  const children = params.get('children') || '0';
+  const infants = params.get('infants') || '0';
+  const pets = params.get('pets') || '0';
+
+  const totalAdults = String((parseInt(adults, 10) || 0) + (parseInt(children, 10) || 0));
 
   useEffect(() => {
-    if (location) {
-      dispatch(searchHouses(location));
+    if (location || parseInt(adults) > 0) {
+      dispatch(searchHouses({ location, totalAdults, infants, pets }));
     } else {
       dispatch(fetchHouses());
     }
-  }, [location ,dispatch]);
+  }, [location, totalAdults, infants, pets, dispatch]);
 
   const displayedHouses = searchResults ?? houses;
 

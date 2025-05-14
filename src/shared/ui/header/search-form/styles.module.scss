@@ -109,6 +109,18 @@
       }
     }
 
+    .guests-input {
+      width: 183px;
+
+      @media (max-width: 930px) {
+        width: calc(183px - ((930px - 100vw) * 0.324));
+      }
+
+      &.active {
+        padding-right: 16px;
+      }
+    }
+
     .dropdown-list {
 
       &-guests {
@@ -167,6 +179,22 @@
       &-value {
         width: 10px;
         text-align: center;
+      }
+    }
+
+    .clear-button {
+      width: 24px;
+      height: 24px;
+      position: absolute;
+      right: 60px;
+      top: 22px;
+      background: transparent;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+
+      &:hover {
+        background: $gray-300;
       }
     }
   }

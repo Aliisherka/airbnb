@@ -59,9 +59,13 @@ export const useGuests = () => {
 
   return {
     adults,
+    setAdults,
     children,
+    setChildren,
     infants,
+    setInfants,
     pets,
+    setPets,
     increment,
     decrement,
     guestsString,

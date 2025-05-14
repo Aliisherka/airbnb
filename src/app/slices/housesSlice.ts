@@ -29,11 +29,17 @@ export const fetchHouses = createAsyncThunk<House[], void>(
   }
 )
 
-export const searchHouses = createAsyncThunk<House[], string>(
+export const searchHouses = createAsyncThunk<House[], { location: string, totalAdults: string, infants: string, pets: string }>(
   'houses/searchHouses',
-  async (location, { rejectWithValue }) => {
+  async ({ location, totalAdults, infants, pets }, { rejectWithValue }) => {
     try {
-      return await apiCall.searchHouses(location);
+      const query = new URLSearchParams({
+        location,
+        totalAdults,
+        infants,
+        pets,
+      }).toString();
+      return await apiCall.searchHouses(query);
     } catch (error) {
       return rejectWithValue(error instanceof Error ? error.message : 'Unknown error');
     }

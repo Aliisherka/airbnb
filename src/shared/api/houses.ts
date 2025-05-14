@@ -25,7 +25,7 @@ export const getHouse = async (id: string | undefined) => {
 
 export const searchHouses = async (query: string) => {
   try {
-    const response = await fetch(`${API_URL}/houses/search?location=${encodeURIComponent(query)}`);
+    const response = await fetch(`${API_URL}/houses/search?${query}`);
     
     if (!response.ok) throw new Error(`Failed to fetch houses: ${response.statusText}`);
 

@@ -27,6 +27,7 @@ const GuestCounterItem = ({
       </div>
       <div className={styles['dropdown-list-counts']}>
         <button
+          type='button'
           className={styles['dropdown-list-button']}
           onClick={onDecrement}
           disabled={isDecrementDisabled}
@@ -35,6 +36,7 @@ const GuestCounterItem = ({
         </button>
         <p className={styles['dropdown-list-value']}>{value}</p>
         <button
+          type='button'
           className={styles['dropdown-list-button']}
           onClick={onIncrement}
         >

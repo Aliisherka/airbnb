@@ -1,11 +1,29 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useGuests } from '../../../hooks/useGuests';
+import IconSvg from '../../../assets/icons/icon';
 import DropdownMenu from '../../dropdown-menu/dropdown-menu';
 import GuestCounterItem from './guest-counter-item';
 import styles from './styles.module.scss';
 
+type GuestType = 'adults' | 'children' | 'infants' | 'pets';
+type GuestsSetter = React.Dispatch<React.SetStateAction<number>>
+
+type GuestsProps = {
+  adults: number;
+  children: number;
+  infants: number;
+  pets: number;
+  increment: (type: GuestType) => void;
+  decrement: (type: GuestType) => void;
+  guestsString: () => string;
+  setAdults: GuestsSetter;
+  setChildren: GuestsSetter;
+  setInfants: GuestsSetter;
+  setPets: GuestsSetter;
+};
+
 type Props = {
+  guests: GuestsProps;
   focusField: string | null;
   setFocusField: (field: string | null) => void;
   showGuestsPopup: boolean;
@@ -16,6 +34,7 @@ type Props = {
 };
 
 const GuestsInput: React.FC<Props> = ({
+  guests,
   focusField,
   setFocusField,
   showGuestsPopup,
@@ -23,18 +42,9 @@ const GuestsInput: React.FC<Props> = ({
   guestsPopupRef,
   onMouseEnter,
   onMouseLeave,
-
 }) => {
   const { t } = useTranslation();
-  const {
-    adults,
-    children,
-    infants,
-    pets,
-    increment,
-    decrement,
-    guestsString,
-  } = useGuests();
+  const { adults, children, infants, pets, increment, decrement, guestsString, setAdults, setChildren, setInfants, setPets  } = guests;
 
   const toggleGuestsPopup = () => {
     if (focusField === 'guests') {
@@ -45,6 +55,14 @@ const GuestsInput: React.FC<Props> = ({
       setShowGuestsPopup(true);
     }
   };
+
+  const resetGuests = () => {
+    setAdults(0)
+    setChildren(0)
+    setInfants(0)
+    setPets(0)
+    setShowGuestsPopup(true);
+  }
 
   return (
     <>
@@ -65,7 +83,7 @@ const GuestsInput: React.FC<Props> = ({
               id='guests'
               name='guests'
               placeholder={t('add-guests')}
-              className={styles['input']}
+              className={`${styles['input']} ${styles['guests-input']} ${focusField === 'guests' ? styles['active'] : ''}`}
               onClick={toggleGuestsPopup}
               value={guestsString()}
               readOnly
@@ -82,7 +100,7 @@ const GuestsInput: React.FC<Props> = ({
               value={adults}
               onIncrement={() => increment('adults')}
               onDecrement={() => decrement('adults')}
-              isDecrementDisabled={adults <= 0 || (adults === 1 && children > 0 || infants > 0 || pets > 0)}
+              isDecrementDisabled={adults <= 0 || (adults === 1 && (children > 0 || infants > 0 || pets > 0))}
             />
             <GuestCounterItem 
               title={t('children')} 
@@ -107,6 +125,20 @@ const GuestsInput: React.FC<Props> = ({
             />
           </div>
         </DropdownMenu>
+
+        {(focusField === 'guests' && (adults > 0 || children > 0 || infants > 0 || pets > 0)) && (
+          <button
+            type='button'
+            className={styles['clear-button']}
+            onClick={(e) => {
+              e.stopPropagation();
+              resetGuests();
+            }}
+            aria-label='Clear guest selection'
+          >
+            <IconSvg name='close' width='12px' height='12px'/> 
+          </button>
+        )}
       </div>
     </>
   );
