@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './styles.module.scss';
 import IconSvg from '../../../assets/icons/icon';
-import { DateRange } from 'react-date-range';
+import { DateRange, RangeKeyDict } from 'react-date-range';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import LocationInput from './location-input';
@@ -26,8 +26,8 @@ const SearchForm = () => {
   const [calendarStyle, setCalendarStyle] = useState({});
   const [showGuestsPopup, setShowGuestsPopup] = useState(false);
 
-  const containerRef = useRef(null);
-  const calendarRef = useRef(null);
+  const containerRef = useRef<HTMLFormElement>(null);
+  const calendarRef = useRef<HTMLDivElement>(null);
   const guestsPopupRef = useRef<HTMLDivElement>(null);
 
   const guests = useGuests();
@@ -76,18 +76,22 @@ const SearchForm = () => {
     };
   }, []);
 
-  const handleSelect = (ranges) => {
+  const handleSelect = (ranges: RangeKeyDict) => {
     const { startDate, endDate } = ranges.selection;
     if (focusField === 'arrival') {
-      setArrivalDate(startDate);
-      setFocusField('departure');
+      if (startDate) {
+        setArrivalDate(startDate);
+        setFocusField('departure');
+      }
     } else {
-      setDepartureDate(endDate);
-      setShowCalendar(false);
+      if (endDate) {
+        setDepartureDate(endDate);
+        setShowCalendar(false);
+      }
     }
   };
 
-  const toggleCalendar = (field) => {
+  const toggleCalendar = (field: string) => {
     if (focusField === field) {
       setShowCalendar(false);
       setFocusField(null);
