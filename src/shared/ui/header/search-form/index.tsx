@@ -45,6 +45,11 @@ const SearchForm = () => {
     guests.setChildren(childrenParam);
     guests.setInfants(infantsParam);
     guests.setPets(petsParam);
+
+    const arrivalParams = searchParams.get('arrival') || '';
+    const departureParams = searchParams.get('departure') || '';
+    setArrivalDate(arrivalParams ? new Date(arrivalParams) : null)
+    setDepartureDate(departureParams ? new Date(departureParams) : null)
   }, [searchParams]);
 
   useEffect(() => {
@@ -125,6 +130,35 @@ const SearchForm = () => {
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    const toLocalISODate = (date: Date): string => {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    };
+
+    let arrivalStr = '';
+    let departureStr = '';
+
+    if (dates.arrival && !dates.departure) {
+      const dep = new Date(dates.arrival);
+      dep.setDate(dep.getDate() + 1);
+      arrivalStr = toLocalISODate(dates.arrival);
+      departureStr = toLocalISODate(dep);
+    } else if (!dates.arrival && dates.departure) {
+      const arr = new Date(dates.departure);
+      arr.setDate(arr.getDate() - 1);
+      arrivalStr = toLocalISODate(arr);
+      departureStr = toLocalISODate(dates.departure);
+    } else if (dates.arrival && dates.departure) {
+      const sameDay = dates.arrival.toDateString() === dates.departure.toDateString();
+      const dep = sameDay ? new Date(dates.departure) : dates.departure;
+      if (sameDay) dep.setDate(dep.getDate() + 1);
+
+      arrivalStr = toLocalISODate(dates.arrival);
+      departureStr = toLocalISODate(dep);
+    }
+
     setFocusField(null);
     
     setSearchParams({ 
@@ -133,6 +167,8 @@ const SearchForm = () => {
       children: String(guests.children),
       infants: String(guests.infants),
       pets: String(guests.pets),
+      ...(arrivalStr && { arrival: arrivalStr }),
+      ...(departureStr && { departure: departureStr }),
     });
   };
 

@@ -2,6 +2,15 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { apiCall } from '../../shared/api';
 import { House } from '../../shared/types/house';
 
+interface SearchHousesParams {
+  location: string;
+  totalAdults: string;
+  infants: string;
+  pets: string;
+  arrival: string;
+  departure: string;
+}
+
 interface InitialState {
   houses: House[];
   searchResults: House[] | null;
@@ -29,16 +38,11 @@ export const fetchHouses = createAsyncThunk<House[], void>(
   }
 )
 
-export const searchHouses = createAsyncThunk<House[], { location: string, totalAdults: string, infants: string, pets: string }>(
+export const searchHouses = createAsyncThunk<House[], SearchHousesParams>(
   'houses/searchHouses',
-  async ({ location, totalAdults, infants, pets }, { rejectWithValue }) => {
+  async (params, { rejectWithValue }) => {
     try {
-      const query = new URLSearchParams({
-        location,
-        totalAdults,
-        infants,
-        pets,
-      }).toString();
+      const query = new URLSearchParams(params as unknown as Record<string, string>).toString();
       return await apiCall.searchHouses(query);
     } catch (error) {
       return rejectWithValue(error instanceof Error ? error.message : 'Unknown error');

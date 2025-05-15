@@ -6,15 +6,18 @@ export function useDates() {
     departure: null,
   });
 
-  const setArrivalDate = (date: Date) => {
-    setDates((prev) => ({
-      ...prev,
-      arrival: date,
-      departure: date > (prev.departure || date) ? null : prev.departure,
-    }));
+  const setArrivalDate = (date: Date | null) => {
+    setDates((prev) => {
+      const departure = prev.departure;
+      return {
+        ...prev,
+        arrival: date,
+        departure: departure && date && date > departure ? null : departure
+      };
+    });
   };
 
-  const setDepartureDate = (date: Date) => {
+  const setDepartureDate = (date: Date | null) => {
     setDates((prev) => ({
       ...prev,
       departure: date,
