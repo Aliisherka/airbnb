@@ -23,7 +23,7 @@ interface LocationInputProps {
   onCloseDropdown: () => void;
 }
 
-const LocationInput = ({
+const LocationInput = React.memo(({
   query,
   suggestions,
   isOpen,
@@ -86,6 +86,6 @@ const LocationInput = ({
       </DropdownMenu>
     </div>
   );
-};
+});
 
 export default LocationInput;

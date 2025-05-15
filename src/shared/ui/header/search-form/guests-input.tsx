@@ -33,7 +33,7 @@ type Props = {
   onMouseLeave: () => void;
 };
 
-const GuestsInput: React.FC<Props> = ({
+const GuestsInput: React.FC<Props> = React.memo(({
   guests,
   focusField,
   setFocusField,
@@ -142,6 +142,6 @@ const GuestsInput: React.FC<Props> = ({
       </div>
     </>
   );
-};
+});
 
 export default GuestsInput;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export const useGuests = () => {
@@ -8,7 +8,7 @@ export const useGuests = () => {
   const [infants, setInfants] = useState(0);
   const [pets, setPets] = useState(0);
 
-  const increment = (type: 'adults' | 'children' | 'infants' | 'pets') => {
+  const increment = useCallback((type: 'adults' | 'children' | 'infants' | 'pets') => {
     if (type !== 'adults' && adults === 0) setAdults(1);
 
     switch (type) {
@@ -25,9 +25,9 @@ export const useGuests = () => {
         setPets(prev => prev + 1);
         break;
     }
-  };
+  }, [adults]);
 
-  const decrement = (type: 'adults' | 'children' | 'infants' | 'pets') => {
+  const decrement = useCallback((type: 'adults' | 'children' | 'infants' | 'pets') => {
     switch (type) {
       case 'adults':
         setAdults(prev => {
@@ -47,17 +47,17 @@ export const useGuests = () => {
         setPets(prev => Math.max(0, prev - 1));
         break;
     }
-  };
+  }, [children, infants, pets]);
 
-  const guestsString = () => {
+  const guestsString = useCallback(() => {
     const guestsCount = adults + children;
     const infantsCount = infants === 0 ? '' : `, ${t('infants', { count: infants })}`;
     const petsCount = pets === 0 ? '' : `, ${t('pets', { count: pets })}`;
     if (guestsCount === 0) return '';
     return `${t('guests', { count: guestsCount })}${infantsCount}${petsCount}`;
-  };
+  }, [adults, children, infants, pets, t]);
 
-  return {
+  return useMemo(() => ({
     adults,
     setAdults,
     children,
@@ -69,5 +69,9 @@ export const useGuests = () => {
     increment,
     decrement,
     guestsString,
-  };
+  }), [
+    adults, children, infants, pets,
+    setAdults, setChildren, setInfants, setPets,
+    increment, decrement, guestsString
+  ]);
 }

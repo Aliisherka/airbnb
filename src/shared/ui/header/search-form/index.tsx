@@ -15,14 +15,11 @@ const SearchForm = () => {
     query,
     setQuery,
     suggestions,
-    setSuggestions,
     isDropdownOpen,
-    setIsDropdownOpen,
     hoveredField,
     focusField,
     setFocusField,
     showCalendar,
-    toggleCalendar,
     calendarRef,
     calendarStyle,
     handleSelect,
@@ -33,8 +30,19 @@ const SearchForm = () => {
     showGuestsPopup,
     setShowGuestsPopup,
     guestsPopupRef,
-    handleMouseEnter,
     handleMouseLeave,
+    handleFocusLocation,
+    handleBlurLocation,
+    handleSelectSuggestion,
+    handleCloseDropdown,
+    handleMouseEnterLocation,
+    handleMouseEnterArrival,
+    handleMouseEnterDeparture,
+    handleMouseEnterGuests,
+    handleClickArrival,
+    handleClickDeparture,
+    arrivalValue,
+    departureValue
   } = useSearchForm();
 
   return (
@@ -53,19 +61,12 @@ const SearchForm = () => {
         isOpen={isDropdownOpen}
         focusField={focusField}
         onQueryChange={setQuery}
-        onFocus={() => {
-          setFocusField('location');
-          setIsDropdownOpen(true);
-        }}
-        onBlur={() => setFocusField(null)}
-        onSelectSuggestion={(place) => {
-          setQuery(place.name);
-          setSuggestions([]);
-          setIsDropdownOpen(false);
-        }}
-        onMouseEnter={() => handleMouseEnter('location')}
+        onFocus={handleFocusLocation}
+        onBlur={handleBlurLocation}
+        onSelectSuggestion={handleSelectSuggestion}
+        onMouseEnter={handleMouseEnterLocation}
         onMouseLeave={handleMouseLeave}
-        onCloseDropdown={() => setIsDropdownOpen(false)}
+        onCloseDropdown={handleCloseDropdown}
       />
       
       <Divider hidden={hoveredField === 'location' || hoveredField === 'arrival'} />
@@ -73,9 +74,9 @@ const SearchForm = () => {
       <CalendarInput
         label='check-in'
         id='arrival'
-        value={dates.arrival ? dates.arrival.toDateString() : ''}
-        onClick={() => toggleCalendar('arrival')}
-        onMouseEnter={() => handleMouseEnter('arrival')}
+        value={arrivalValue}
+        onClick={handleClickArrival}
+        onMouseEnter={handleMouseEnterArrival}
         onMouseLeave={handleMouseLeave}
         isActive={focusField === 'arrival'}
         className='arrival'
@@ -86,9 +87,9 @@ const SearchForm = () => {
       <CalendarInput
         label='check-out'
         id='departure'
-        value={dates.departure ? dates.departure.toDateString() : ''}
-        onClick={() => toggleCalendar('departure')}
-        onMouseEnter={() => handleMouseEnter('departure')}
+        value={departureValue}
+        onClick={handleClickDeparture}
+        onMouseEnter={handleMouseEnterDeparture}
         onMouseLeave={handleMouseLeave}
         isActive={focusField === 'departure'}
         className='departure'
@@ -103,7 +104,7 @@ const SearchForm = () => {
         showGuestsPopup={showGuestsPopup}
         setShowGuestsPopup={setShowGuestsPopup}
         guestsPopupRef={guestsPopupRef}
-        onMouseEnter={() => handleMouseEnter('guests')}
+        onMouseEnter={handleMouseEnterGuests}
         onMouseLeave={handleMouseLeave}
       />
       

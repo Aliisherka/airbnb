@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 export const useSearchHandler = ({
@@ -20,7 +21,7 @@ export const useSearchHandler = ({
     return `${year}-${month}-${day}`;
   };
 
-  return (e: React.FormEvent) => {
+  const handleSearch = useCallback((e: React.FormEvent) => {
     e.preventDefault();
 
     let arrivalStr = '';
@@ -56,5 +57,7 @@ export const useSearchHandler = ({
       ...(arrivalStr && { arrival: arrivalStr }),
       ...(departureStr && { departure: departureStr }),
     });
-  }
+  }, [dates, guests, query, setSearchParams, setFocusField]);
+
+  return handleSearch;
 };

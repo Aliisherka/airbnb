@@ -13,7 +13,7 @@ interface CalendarInputProps {
   className?: string;
 }
 
-const CalendarInput: React.FC<CalendarInputProps> = ({
+const CalendarInput: React.FC<CalendarInputProps> = React.memo(({
   label,
   id,
   value,
@@ -47,6 +47,6 @@ const CalendarInput: React.FC<CalendarInputProps> = ({
       />
     </div>
   );
-};
+});
 
 export default CalendarInput;

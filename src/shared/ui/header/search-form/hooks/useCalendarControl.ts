@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { RangeKeyDict } from 'react-date-range';
 
 export const useCalendarControl = (
@@ -12,7 +12,7 @@ export const useCalendarControl = (
   const [calendarStyle, setCalendarStyle] = useState({});
   const calendarRef = useRef<HTMLDivElement>(null);
 
-  const handleSelect = (ranges: RangeKeyDict) => {
+  const handleSelect = useCallback((ranges: RangeKeyDict) => {
     const { startDate, endDate } = ranges.selection;
     if (focusField === 'arrival') {
       if (startDate) {
@@ -25,9 +25,9 @@ export const useCalendarControl = (
         setShowCalendar(false);
       }
     }
-  };
+  }, [focusField, setArrivalDate, setDepartureDate, setFocusField]);
 
-  const toggleCalendar = (field: string) => {
+  const toggleCalendar = useCallback((field: string) => {
     if (focusField === field) {
       setShowCalendar(false);
       setFocusField(null);
@@ -48,7 +48,7 @@ export const useCalendarControl = (
         });
       }
     }
-  };
+  }, [focusField, setFocusField, containerRef]);
 
   return { showCalendar, setShowCalendar, handleSelect, toggleCalendar, calendarRef, calendarStyle };
 };

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useDates } from '../../../../hooks/useDates';
 import { useCalendarControl } from './useCalendarControl';
@@ -7,6 +7,7 @@ import { useGuestsControl } from './useGuestsControl';
 import { useOutsideClickHandler } from './useOutsideClickHandler';
 import { useQueryControl } from './useQueryControl';
 import { useSearchHandler } from './useSearchHandler';
+import { useSearchFormCallbacks } from './useSearchFormCallbacks';
 
 export const useSearchForm = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -48,26 +49,33 @@ export const useSearchForm = () => {
 
   const handleSearch = useSearchHandler({ dates, guests, query, setSearchParams, setFocusField });
 
-  const handleMouseEnter = (field: string) => {
-    setHoveredField(field);
-  };
+  const callbacks = useSearchFormCallbacks({
+    setFocusField,
+    setIsDropdownOpen,
+    setQuery,
+    setSuggestions,
+    toggleCalendar,
+    setHoveredField
+  });
 
-  const handleMouseLeave = () => {
-    setHoveredField(null);
-  };
+  const arrivalValue = useMemo(() => {
+    return dates.arrival ? dates.arrival.toDateString() : '';
+  }, [dates.arrival]);
+
+  const departureValue = useMemo(() => {
+    return dates.departure ? dates.departure.toDateString() : '';
+  }, [dates.departure]);
 
   return {
+    ...callbacks,
     query,
     setQuery,
     suggestions,
-    setSuggestions,
     isDropdownOpen,
-    setIsDropdownOpen,
     hoveredField,
     focusField,
     setFocusField,
     showCalendar,
-    toggleCalendar,
     calendarRef,
     calendarStyle,
     handleSelect,
@@ -78,7 +86,7 @@ export const useSearchForm = () => {
     showGuestsPopup,
     setShowGuestsPopup,
     guestsPopupRef,
-    handleMouseEnter,
-    handleMouseLeave,
+    arrivalValue,
+    departureValue
   }
 }
