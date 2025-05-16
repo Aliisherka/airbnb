@@ -22,7 +22,6 @@ export const useCalendarControl = (
     } else {
       if (endDate) {
         setDepartureDate(endDate);
-        setShowCalendar(false);
       }
     }
   }, [focusField, setArrivalDate, setDepartureDate, setFocusField]);
@@ -39,7 +38,7 @@ export const useCalendarControl = (
         const rect = containerRef.current.getBoundingClientRect();
         setCalendarStyle({
           position: 'absolute',
-          top: `${rect.bottom}px`,
+          top: `${rect.top}px`,
           zIndex: 1000,
           border: '1px solid #ddd',
           borderRadius: '25px',

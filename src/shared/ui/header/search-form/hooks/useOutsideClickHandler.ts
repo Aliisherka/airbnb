@@ -6,12 +6,16 @@ export const useOutsideClickHandler = (
 ) => {
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
-      if (refs.every(ref => ref.current && !ref.current.contains(e.target as Node))) {
+      const clickedOutside = refs.every(ref => {
+        const el = ref.current;
+        return !el || !el.contains(e.target as Node);
+      });
+      if (clickedOutside) {
         onOutsideClick();
       }
     };
 
     document.addEventListener('mousedown', handleClick);
     return () => document.removeEventListener('mousedown', handleClick);
-  }, [refs]);
+  }, [onOutsideClick, refs]);
 };

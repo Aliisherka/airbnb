@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useDates } from '../../../../hooks/useDates';
 import { useCalendarControl } from './useCalendarControl';
@@ -20,6 +20,7 @@ export const useSearchForm = () => {
 
   const containerRef = useRef<HTMLFormElement>(null);
   const guestsPopupRef = useRef<HTMLDivElement>(null);
+  const calendarInputsRef = useRef<HTMLDivElement>(null);
 
   const {
     query, setQuery, suggestions, setSuggestions
@@ -31,14 +32,17 @@ export const useSearchForm = () => {
     showCalendar, setShowCalendar, handleSelect, toggleCalendar, calendarRef, calendarStyle
   } = useCalendarControl(focusField, setFocusField, containerRef, setArrivalDate, setDepartureDate);
 
-  useOutsideClickHandler(
-    [calendarRef, containerRef, guestsPopupRef],
-    () => {
-      setShowCalendar(false);
-      setShowGuestsPopup(false);
-      setFocusField(null);
-    }
-  );
+  const handleOutsideClick = useCallback(() => {
+    setShowCalendar(false);
+    setShowGuestsPopup(false);
+    setFocusField(null);
+  }, [setShowCalendar, setShowGuestsPopup, setFocusField]);
+
+  useOutsideClickHandler([containerRef, guestsPopupRef], handleOutsideClick);
+
+  useOutsideClickHandler([calendarRef, calendarInputsRef], () => {
+    setShowCalendar(false);
+  });
 
   useDatesControl(searchParams, setArrivalDate, setDepartureDate);
 
@@ -77,6 +81,7 @@ export const useSearchForm = () => {
     setFocusField,
     showCalendar,
     calendarRef,
+    calendarInputsRef,
     calendarStyle,
     handleSelect,
     dates,

@@ -38,10 +38,6 @@ export const useSearchFormCallbacks = ({
       setIsDropdownOpen(true);
     }, []),
 
-    handleBlurLocation: useCallback(() => {
-      setFocusField(null);
-    }, []),
-
     handleSelectSuggestion: useCallback((place: Place) => {
       setQuery(place.name);
       setSuggestions([]);

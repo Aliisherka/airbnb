@@ -17,7 +17,6 @@ interface LocationInputProps {
   focusField: string | null;
   onQueryChange: (value: string) => void;
   onFocus: () => void;
-  onBlur: () => void;
   onSelectSuggestion: (suggestion: Suggestion) => void;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
@@ -31,7 +30,6 @@ const LocationInput = React.memo(({
   focusField,
   onQueryChange,
   onFocus,
-  onBlur,
   onSelectSuggestion,
   onMouseEnter,
   onMouseLeave,
@@ -65,7 +63,6 @@ const LocationInput = React.memo(({
             className={styles['input']}
             onChange={(e) => onQueryChange(e.target.value)}
             onFocus={onFocus}
-            onBlur={onBlur}
             autoComplete='off'
           />
         }

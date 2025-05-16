@@ -21,6 +21,7 @@ const SearchForm = () => {
     setFocusField,
     showCalendar,
     calendarRef,
+    calendarInputsRef,
     calendarStyle,
     handleSelect,
     dates,
@@ -32,7 +33,6 @@ const SearchForm = () => {
     guestsPopupRef,
     handleMouseLeave,
     handleFocusLocation,
-    handleBlurLocation,
     handleSelectSuggestion,
     handleCloseDropdown,
     handleMouseEnterLocation,
@@ -65,7 +65,6 @@ const SearchForm = () => {
         focusField={focusField}
         onQueryChange={setQuery}
         onFocus={handleFocusLocation}
-        onBlur={handleBlurLocation}
         onSelectSuggestion={handleSelectSuggestion}
         onMouseEnter={handleMouseEnterLocation}
         onMouseLeave={handleMouseLeave}
@@ -73,32 +72,34 @@ const SearchForm = () => {
       />
       
       <Divider hidden={hoveredField === 'location' || hoveredField === 'arrival'} />
+      
+      <div ref={calendarInputsRef} style={{ display: 'contents' }}>
+        <CalendarInput
+          label='check-in'
+          id='arrival'
+          value={arrivalValue}
+          onClick={handleClickArrival}
+          onMouseEnter={handleMouseEnterArrival}
+          onMouseLeave={handleMouseLeave}
+          isActive={focusField === 'arrival'}
+          className='arrival'
+          onClear={clearArrivalDate}
+        />
 
-      <CalendarInput
-        label='check-in'
-        id='arrival'
-        value={arrivalValue}
-        onClick={handleClickArrival}
-        onMouseEnter={handleMouseEnterArrival}
-        onMouseLeave={handleMouseLeave}
-        isActive={focusField === 'arrival'}
-        className='arrival'
-        onClear={clearArrivalDate}
-      />
+        <Divider hidden={hoveredField === 'arrival' || hoveredField === 'departure'} />
 
-      <Divider hidden={hoveredField === 'arrival' || hoveredField === 'departure'} />
-
-      <CalendarInput
-        label='check-out'
-        id='departure'
-        value={departureValue}
-        onClick={handleClickDeparture}
-        onMouseEnter={handleMouseEnterDeparture}
-        onMouseLeave={handleMouseLeave}
-        isActive={focusField === 'departure'}
-        className='departure'
-        onClear={clearDepartureDate}
-      />
+        <CalendarInput
+          label='check-out'
+          id='departure'
+          value={departureValue}
+          onClick={handleClickDeparture}
+          onMouseEnter={handleMouseEnterDeparture}
+          onMouseLeave={handleMouseLeave}
+          isActive={focusField === 'departure'}
+          className='departure'
+          onClear={clearDepartureDate}
+        />
+      </div>
 
       <Divider hidden={hoveredField === 'departure' || hoveredField === 'guests'} />
 
