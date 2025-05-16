@@ -11,7 +11,7 @@ import { useSearchFormCallbacks } from './useSearchFormCallbacks';
 
 export const useSearchForm = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { dates, setArrivalDate, setDepartureDate } = useDates();
+  const { dates, setArrivalDate, setDepartureDate, clearArrivalDate, clearDepartureDate } = useDates();
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [hoveredField, setHoveredField] = useState<string | null>(null);
@@ -87,6 +87,8 @@ export const useSearchForm = () => {
     setShowGuestsPopup,
     guestsPopupRef,
     arrivalValue,
-    departureValue
+    departureValue,
+    clearArrivalDate,
+    clearDepartureDate
   }
 }

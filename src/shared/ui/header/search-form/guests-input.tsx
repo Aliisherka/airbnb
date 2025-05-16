@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import IconSvg from '../../../assets/icons/icon';
 import DropdownMenu from '../../dropdown-menu/dropdown-menu';
+import { ClearButton } from './components/ClearButton';
 import GuestCounterItem from './guest-counter-item';
 import styles from './styles.module.scss';
 
@@ -126,19 +126,11 @@ const GuestsInput: React.FC<Props> = React.memo(({
           </div>
         </DropdownMenu>
 
-        {(focusField === 'guests' && (adults > 0 || children > 0 || infants > 0 || pets > 0)) && (
-          <button
-            type='button'
-            className={styles['clear-button']}
-            onClick={(e) => {
-              e.stopPropagation();
-              resetGuests();
-            }}
-            aria-label='Clear guest selection'
-          >
-            <IconSvg name='close' width='12px' height='12px'/> 
-          </button>
-        )}
+        <ClearButton 
+          onClick={resetGuests} 
+          isVisible={focusField === 'guests' && (adults > 0 || children > 0 || infants > 0 || pets > 0)}
+          type={'guests'}
+        />
       </div>
     </>
   );

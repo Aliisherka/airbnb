@@ -42,7 +42,9 @@ const SearchForm = () => {
     handleClickArrival,
     handleClickDeparture,
     arrivalValue,
-    departureValue
+    departureValue,
+    clearArrivalDate,
+    clearDepartureDate
   } = useSearchForm();
 
   return (
@@ -54,6 +56,7 @@ const SearchForm = () => {
       method='GET'
       ref={containerRef}
       onSubmit={handleSearch}
+      autoComplete='off'
     >
       <LocationInput
         query={query}
@@ -80,6 +83,7 @@ const SearchForm = () => {
         onMouseLeave={handleMouseLeave}
         isActive={focusField === 'arrival'}
         className='arrival'
+        onClear={clearArrivalDate}
       />
 
       <Divider hidden={hoveredField === 'arrival' || hoveredField === 'departure'} />
@@ -93,6 +97,7 @@ const SearchForm = () => {
         onMouseLeave={handleMouseLeave}
         isActive={focusField === 'departure'}
         className='departure'
+        onClear={clearDepartureDate}
       />
 
       <Divider hidden={hoveredField === 'departure' || hoveredField === 'guests'} />

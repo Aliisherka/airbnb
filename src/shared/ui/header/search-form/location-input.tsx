@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import DropdownMenu from '../../dropdown-menu/dropdown-menu';
 import IconSvg from '../../../assets/icons/icon';
 import styles from './styles.module.scss';
+import { ClearButton } from './components/ClearButton';
 
 interface Suggestion {
   name: string;
@@ -38,6 +39,10 @@ const LocationInput = React.memo(({
 }: LocationInputProps) => {
   const { t } = useTranslation();
 
+  const resetLocation = () => {
+    onQueryChange('');
+  }
+
   return (
     <div 
       className={`${styles['search-field']} ${styles['location']} ${
@@ -61,6 +66,7 @@ const LocationInput = React.memo(({
             onChange={(e) => onQueryChange(e.target.value)}
             onFocus={onFocus}
             onBlur={onBlur}
+            autoComplete='off'
           />
         }
         isOpen={isOpen && suggestions.length > 0}
@@ -84,6 +90,12 @@ const LocationInput = React.memo(({
           ))}
         </ul>
       </DropdownMenu>
+
+      <ClearButton 
+        onClick={resetLocation}
+        isVisible={focusField === 'location' && Boolean(query)}
+        type={'location'}
+      />
     </div>
   );
 });

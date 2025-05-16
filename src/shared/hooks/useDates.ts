@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 export function useDates() {
   const [dates, setDates] = useState<{ arrival: Date | null; departure: Date | null }>({
@@ -24,9 +24,19 @@ export function useDates() {
     }));
   };
 
+  const clearArrivalDate = useCallback(() => {
+    setArrivalDate(null);
+  }, [setArrivalDate]);
+
+  const clearDepartureDate = useCallback(() => {
+    setDepartureDate(null);
+  }, [setDepartureDate]);
+
   return {
     dates,
     setArrivalDate,
     setDepartureDate,
+    clearArrivalDate,
+    clearDepartureDate
   };
 }

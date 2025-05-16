@@ -186,7 +186,6 @@
       width: 24px;
       height: 24px;
       position: absolute;
-      right: 60px;
       top: 22px;
       background: transparent;
       border: none;
@@ -195,6 +194,15 @@
 
       &:hover {
         background: $gray-300;
+      }
+
+      &-guests {
+        right: 60px;
+      }
+  
+      &-calendar,
+      &-location {
+        right: 10px;
       }
     }
   }
