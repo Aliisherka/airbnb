@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { fetchLocations } from '../api/locationService';
+import { fetchLocations } from '../../../../api/locationService';
 
 const useFetchLocations = (query: string, delay: number = 300) => {
   const [suggestions, setSuggestions] = useState<any[]>([]);

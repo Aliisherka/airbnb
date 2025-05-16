@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { ClearButton } from './components/ClearButton';
 import styles from './styles.module.scss';
 
 interface CalendarInputProps {
@@ -11,9 +12,10 @@ interface CalendarInputProps {
   onMouseLeave: () => void;
   isActive: boolean;
   className?: string;
+  onClear: () => void;
 }
 
-const CalendarInput: React.FC<CalendarInputProps> = ({
+const CalendarInput: React.FC<CalendarInputProps> = React.memo(({
   label,
   id,
   value,
@@ -22,6 +24,7 @@ const CalendarInput: React.FC<CalendarInputProps> = ({
   onMouseLeave,
   isActive,
   className = '',
+  onClear
 }) => {
   const { t } = useTranslation();
 
@@ -40,13 +43,22 @@ const CalendarInput: React.FC<CalendarInputProps> = ({
         type='text'
         id={id}
         readOnly
-        value={value}
+        value={value ? new Date(value).toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric'
+        }) : ''}
         placeholder={t('add-dates')}
         onClick={onClick}
         className={styles['input']}
       />
+
+      <ClearButton 
+        onClick={onClear} 
+        isVisible={isActive && Boolean(value)}
+        type={'calendar'}
+      />
     </div>
   );
-};
+});
 
 export default CalendarInput;
