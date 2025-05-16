@@ -45,5 +45,19 @@
   "suggested-destinations": "Рекомендуемые направления",
   "start-your-search": "Начать поиск",
   "clear-all": "Очистить всё",
-  "search": "Искать"
+  "search": "Искать",
+  "adults": "Взрослые",
+  "ages-13-or-above": "От 13 лет",
+  "children": "Дети",
+  "ages-2-12": "Возраст от 2 до 12",
+  "infants": "Младенцы",
+  "under-2": "Младше 2",
+  "pets": "Домашние животные",
+  "bringing-a-service-animal?": "Путешествуете с животным помощником?",
+  "infants_one": "{{count}} младенец",
+  "infants_few": "{{count}} младенца",
+  "infants_many": "{{count}} младенцев",
+  "pets_one": "{{count}} питомец",
+  "pets_few": "{{count}} питомца",
+  "pets_many": "{{count}} питомцев"
 }
