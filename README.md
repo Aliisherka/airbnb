@@ -7,12 +7,19 @@ This is a full-stack pet project that replicates key functionalities of Airbnb, 
 
 ## Features  
 - **Property Listings**: View a collection of rental properties with images, descriptions, and pricing.  
-- **Search & Filtering**: Find properties based on city and country. Currently, search validation is limited to Almaty (Kazakhstan) and Czechia due to the availability of listings.  
+- **Advanced Search & Filtering**:  
+  - Search by **country** and **city**  
+  - Filter by **available dates** (calendar)
+  - Filter by **number of guests**, **children**, **infants**, and **pets**Czechia due to the availability of listings.  
 - **User Authentication**: Registration and login with **JWT-based** authentication. 
 - **Multi-language Support**: Available in English, Russian, and Czech. 
 - **Responsive Design**: Fully adapted for both desktop and mobile, including swipe gestures on mobile.
 - **Interactive UI**: Users can open property details and browse listings smoothly using a card carousel.
 - **UX Enhancements**: Visual loading indicator when backend is idle (Render cold start).
+- **CI/CD Integration**:  
+  - Automated testing pipeline runs on **push** and **pull request**  
+  - Includes **unit tests**, **integration tests**, and **end-to-end (E2E) tests**  
+  - Automatic **deployment to GitHub Pages** on successful builds
 
 ## Backend Integration  
 This project fetches data from a backend server hosted on **Render.com**, which is built with **MongoDB**, **Express**, and **Node.js**.  
@@ -24,7 +31,9 @@ This project fetches data from a backend server hosted on **Render.com**, which 
 
 ## Technologies Used  
 - **Frontend**: HTML, CSS, JavaScript, React, TypeScript  
-- **Styling**: Sass  
+- **Styling**: Sass
+- **Testing**: Vitest, React Testing Library, Cypress
+- **CI/CD**: GitHub Actions (tests + deployment pipeline) 
 - **Deployment**: GitHub Pages
 
 ## Installation & Usage  
@@ -42,14 +51,17 @@ This project fetches data from a backend server hosted on **Render.com**, which 
    ```
 4. Run the project locally:
    ```sh
-   npm start
+   npm run dev
    ```
-5.	Open http://localhost:3000/ in your browser.
+5.	Open http://localhost:5173/ in your browser.
 
 ## Future Improvements  
-- Improve filtering (e.g., by price, number of guests, etc.) 
-- Refine the property card page, as it is not fully developed yet.  
-- Allow users to add their own property listings.
+- **Improve mobile search form**: Extend functionality by adding filtering by dates and number of guests. Currently, it only submits country/city.
+- **User-linked listings**: Bind property listings to the user who created them for future edit/delete features.
+- **Enhance property cards on homepage**: Show price, date range, and brief description directly on each card.
+- **Allow users to create listings**: Build a UI to let authenticated users submit new properties.
+- **Add price filtering**: Extend existing search filters with a price range selector.
+- **Improve property details page**: Finalize layout, polish UI, and add missing information.
 
 ## Contact  
 For any questions or suggestions, feel free to reach out via GitHub issues or pull requests.
