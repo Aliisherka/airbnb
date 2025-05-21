@@ -93,9 +93,28 @@
       color: $gray-500;
     }
 
-    .price {
+    .price-row {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 6px;
       font-size: $font-size-card;
+      color: $gray-500;
+
+      .converted-price {
+        font-weight: $font-weight-medium;
+        color: $gray-900;
+      }
+
+      .dot-separator {
+        vertical-align: middle;
+      }
+
+      .total-price {
+        text-decoration: underline;
+      }
     }
+
 
     .rating {
       display: flex;
