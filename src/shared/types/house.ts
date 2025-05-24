@@ -4,6 +4,7 @@ export interface House {
   city: string;
   country: string;
   price: string;
+  currency: string;
   rating: number;
   images: string[];
   createdAt: string;
@@ -13,4 +14,8 @@ export interface House {
   bedrooms: number;
   beds: number;
   bathrooms: number;
+}
+
+export interface HouseCardProps extends House {
+  exchangeRate?: number;
 }

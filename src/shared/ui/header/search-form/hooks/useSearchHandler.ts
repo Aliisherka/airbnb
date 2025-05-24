@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { getDefaultDates } from '../../../../lib/getDefaultDates';
 
 export const useSearchHandler = ({
   dates,
@@ -27,23 +28,27 @@ export const useSearchHandler = ({
     let arrivalStr = '';
     let departureStr = '';
 
-    if (dates.arrival && !dates.departure) {
+    if (dates.arrival && dates.departure) {
+      const sameDay = dates.arrival.toDateString() === dates.departure.toDateString();
+      const dep = sameDay ? new Date(dates.departure) : dates.departure;
+      if (sameDay) dep.setDate(dep.getDate() + 1);
+  
+      arrivalStr = toLocalISODate(dates.arrival);
+      departureStr = toLocalISODate(dep);
+    } else if (dates.arrival) {
       const dep = new Date(dates.arrival);
       dep.setDate(dep.getDate() + 1);
       arrivalStr = toLocalISODate(dates.arrival);
       departureStr = toLocalISODate(dep);
-    } else if (!dates.arrival && dates.departure) {
+    } else if (dates.departure) {
       const arr = new Date(dates.departure);
       arr.setDate(arr.getDate() - 1);
       arrivalStr = toLocalISODate(arr);
       departureStr = toLocalISODate(dates.departure);
-    } else if (dates.arrival && dates.departure) {
-      const sameDay = dates.arrival.toDateString() === dates.departure.toDateString();
-      const dep = sameDay ? new Date(dates.departure) : dates.departure;
-      if (sameDay) dep.setDate(dep.getDate() + 1);
-
-      arrivalStr = toLocalISODate(dates.arrival);
-      departureStr = toLocalISODate(dep);
+    } else {
+      const defaultDates = getDefaultDates();
+      arrivalStr = defaultDates.arrival;
+      departureStr = defaultDates.departure;
     }
 
     setFocusField(null);
@@ -54,8 +59,8 @@ export const useSearchHandler = ({
       children: String(guests.children),
       infants: String(guests.infants),
       pets: String(guests.pets),
-      ...(arrivalStr && { arrival: arrivalStr }),
-      ...(departureStr && { departure: departureStr }),
+      arrival: arrivalStr,
+      departure: departureStr,
     });
   }, [dates, guests, query, setSearchParams, setFocusField]);
 

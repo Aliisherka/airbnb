@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../app/store/hooks';
 import { fetchHouses, searchHouses } from '../../app/slices/housesSlice';
 import { LoadingScreen } from '../../shared/ui/loading-screen';
 import { useSearchParams } from 'react-router-dom';
+import { useExchangeRates } from '../../shared/hooks/useExchangeRates';
 
 const Home = () => {
   const dispatch = useAppDispatch();
@@ -37,10 +38,13 @@ const Home = () => {
 
   const displayedHouses = searchResults ?? houses;
 
+  const uniqueCurrencies = [...new Set(displayedHouses.map(house => house.currency))];
+  const exchangeRates = useExchangeRates(uniqueCurrencies);
+
   return (
     <div className={styles['home']}>
       {displayedHouses.length === 0 && status === 'loading' && <LoadingScreen />}
-      {displayedHouses.length > 0 && <HouseList houses={displayedHouses} />}
+      {displayedHouses.length > 0 && <HouseList houses={displayedHouses} exchangeRates={exchangeRates} />}
     </div>
   );
 };

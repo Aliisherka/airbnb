@@ -3,23 +3,15 @@ import styles from './styles.module.scss';
 import HouseCard from './houseCard/houseCard';
 import { House } from '../../shared/types/house';
 
-const HouseList = ({ houses }: { houses: House[] }) => {
+const HouseList = ({ houses, exchangeRates }: { houses: House[], exchangeRates: Record<string, number> }) => {
   return (
     <div className={styles['house-list']}>
       {houses.map((house) => (
         <HouseCard
           key={house._id}
-          title={house.title}
-          // distance={house.distance}
-          price={house.price}
-          rating={house.rating}
-          images={house.images}
-          _id={house._id} 
-          city={''} 
-          country={''} 
-          createdAt={''} 
-          updatedAt={''} 
-          __v={0}        />
+          {...house}
+          exchangeRate={exchangeRates[house.currency]}
+        />
       ))}
     </div>
   );

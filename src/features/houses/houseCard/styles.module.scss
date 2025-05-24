@@ -82,20 +82,40 @@
     align-items: flex-start;
     line-height: $line-height-xs;
 
-    .title {
-      font-size: $font-size-card;
-      font-weight: $font-weight-medium;
-      color: $gray-900;
-    }
-
-    .distance {
+    .information {
       font-size: $font-size-card;
       color: $gray-500;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      .title {
+        font-size: $font-size-card;
+        font-weight: $font-weight-medium;
+        color: $gray-900;
+      }
+  
+      .price-row {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        margin-top: 6px;
+  
+        .converted-price {
+          font-weight: $font-weight-medium;
+          color: $gray-900;
+        }
+  
+        .dot-separator {
+          vertical-align: middle;
+        }
+  
+        .total-price {
+          text-decoration: underline;
+        }
+      }
     }
 
-    .price {
-      font-size: $font-size-card;
-    }
 
     .rating {
       display: flex;
