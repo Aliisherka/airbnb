@@ -82,36 +82,37 @@
     align-items: flex-start;
     line-height: $line-height-xs;
 
-    .title {
-      font-size: $font-size-card;
-      font-weight: $font-weight-medium;
-      color: $gray-900;
-    }
-
-    .distance {
+    .information {
       font-size: $font-size-card;
       color: $gray-500;
-    }
-
-    .price-row {
       display: flex;
-      align-items: center;
+      flex-direction: column;
       gap: 4px;
-      margin-top: 6px;
-      font-size: $font-size-card;
-      color: $gray-500;
 
-      .converted-price {
+      .title {
+        font-size: $font-size-card;
         font-weight: $font-weight-medium;
         color: $gray-900;
       }
-
-      .dot-separator {
-        vertical-align: middle;
-      }
-
-      .total-price {
-        text-decoration: underline;
+  
+      .price-row {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        margin-top: 6px;
+  
+        .converted-price {
+          font-weight: $font-weight-medium;
+          color: $gray-900;
+        }
+  
+        .dot-separator {
+          vertical-align: middle;
+        }
+  
+        .total-price {
+          text-decoration: underline;
+        }
       }
     }
 

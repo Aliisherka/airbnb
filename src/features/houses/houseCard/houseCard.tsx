@@ -8,8 +8,9 @@ import useIsMobile from '../../../shared/hooks/useIsMobile';
 import { HouseCardProps } from '../../../shared/types/house';
 import { differenceInCalendarDays, parseISO } from 'date-fns';
 import { getCurrentLanguage } from '../../../shared/lib/lang';
+import { formatDateRange } from '../../../shared/lib/formatDateRange';
 
-const HouseCard: React.FC<HouseCardProps> = ({ title, price, rating, images, _id, exchangeRate = 1 }) => {
+const HouseCard: React.FC<HouseCardProps> = ({ title, price, rating, images, _id, exchangeRate = 1, bedrooms }) => {
   const { t } = useTranslation();
   const isMobile = useIsMobile();
   const navigate = useNavigate();
@@ -28,6 +29,11 @@ const HouseCard: React.FC<HouseCardProps> = ({ title, price, rating, images, _id
   }, [arrival, departure]);
 
   const totalPrice = totalNights * convertedPrice;
+
+  const formattedDateRange = useMemo(() => {
+    if (!arrival || !departure) return '';
+    return formatDateRange(arrival, departure, currentLang);
+  }, [arrival, departure, currentLang]);
 
   const handleOpenHousePage = () => {
     const path = `/house/${_id}`;
@@ -50,8 +56,17 @@ const HouseCard: React.FC<HouseCardProps> = ({ title, price, rating, images, _id
         onClick={handleOpenHousePage}
       />
       <div className={styles['card-body']}>
-        <div>
+        <div className={styles['information']}>
           <h2 data-testid='house-title' className={styles['title']}>{title}</h2>
+
+          {bedrooms && (
+            <p>{t('bedrooms', { count: bedrooms })}</p>
+          )}
+
+          {formattedDateRange && (
+            <p>{formattedDateRange}</p>
+          )}
+
           <div className={styles['price-row']}>
             <p data-testid='house-prices'>
               <span className={styles['converted-price']}>{`$${convertedPrice} `}</span>
