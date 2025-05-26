@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import authenticate from '../../../api/auth';
+import {authenticate, completeProfile} from '../../../api/auth';
 import DropdownMenu from '../../dropdown-menu/dropdown-menu';
 import { useAuth } from '../../../hooks/useAuth';
 import UserButton from './userButton';
@@ -12,15 +12,17 @@ const ProfileMenu = () => {
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [countryCode, setCountryCode] = useState('+7');
-  const [errors, setErrors] = useState({ phone: '', password: '' });
+  const [errors, setErrors] = useState({ phone: '', password: '', name: '' });
   const [isFocused, setIsFocused] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [authStep, setAuthStep] = useState<'auth' | 'name'>('auth');
+  const [name, setName] = useState('');
 
   const userInitial = user ? user.phoneNumber.charAt(1).toUpperCase() : '';
 
   const validate = () => {
-    const newErrors = { phone: '', password: '' };
+    const newErrors = { phone: '', password: '', name: '' };
     if (!phone || phone.length <= countryCode.length) newErrors.phone = 'Enter your phone number';
     if (!password) newErrors.password = 'Enter your password';
     setErrors(newErrors);
@@ -29,19 +31,44 @@ const ProfileMenu = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validate()) return;
 
-    setLoading(true);
-    try {
-      const user = await authenticate(phone, password);
-      console.log('Successful login:', user);
-      login(user);
-      setIsModalOpen(false);
-    } catch (error) {
-      console.error('Authorization error:', error);
-      setErrors((prev) => ({ ...prev, phone: 'Login error' }));
-    } finally {
-      setLoading(false);
+    if (authStep === 'auth') {
+      if (!validate()) return;
+
+      setLoading(true);
+      try {
+        const user = await authenticate(phone, password);
+        console.log('Successful login:', user);
+        if (!user.name) {
+          setAuthStep('name');
+          return;
+        }
+        login(user);
+        setIsModalOpen(false);
+      } catch (error) {
+        console.error('Authorization error:', error);
+        setErrors((prev) => ({ ...prev, phone: 'Login error' }));
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    if (authStep === 'name') {
+      if (!name.trim()) {
+        setErrors((prev) => ({ ...prev, name: 'Enter your name' }));
+        return;
+      }
+      setLoading(true);
+      try {
+        const updatedUser = await completeProfile(name);
+        login(updatedUser);
+        setIsModalOpen(false);
+      } catch (error) {
+        console.error('Name saving error:', error);
+        setErrors((prev) => ({ ...prev, name: 'Something went wrong' }));
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -81,7 +108,8 @@ const ProfileMenu = () => {
     setPhone('');
     setPassword('');
     setCountryCode('+7');
-    setErrors({ phone: '', password: '' });
+    setAuthStep('auth');
+    setErrors({ phone: '', password: '', name: '' });
   };
 
   const handleMenuClose = () => {
@@ -124,6 +152,9 @@ const ProfileMenu = () => {
         onCountryCodeChange={handleCountryCodeChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        name={name}
+        setName={setName}
+        authStep={authStep}
       />
     </>
   );

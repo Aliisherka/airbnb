@@ -35,3 +35,7 @@ apiClient.interceptors.response.use(
 export const postRequest = (url: string, body: any = {}, options: object = {}) => {
   return apiClient.post(url, body, options);
 };
+
+export const patchRequest = (url: string, body: any = {}, options: object = {}) => {
+  return apiClient.patch(url, body, options);
+};

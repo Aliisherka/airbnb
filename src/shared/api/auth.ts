@@ -1,12 +1,12 @@
-import { postRequest } from './postRequest';
+import { patchRequest, postRequest } from './postRequest';
 
-const authenticate = async (phoneNumber: string, password: string) => {
+export const authenticate = async (phoneNumber: string, password: string) => {
   try {
     const response = await postRequest('/auth', { phoneNumber, password });
     
     const { token, user } = response.data.data;
     
-    localStorage.setItem('token', token);
+    localStorage.setItem('access_token', token);
     
     return user;
   } catch (error) {
@@ -14,4 +14,7 @@ const authenticate = async (phoneNumber: string, password: string) => {
   }
 };
 
-export default authenticate
+export const completeProfile = async (name: string) => {
+  const response = await patchRequest('/auth/complete-profile', { name });
+  return response.data;
+}
