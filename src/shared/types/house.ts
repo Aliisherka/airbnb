@@ -19,3 +19,12 @@ export interface House {
 export interface HouseCardProps extends House {
   exchangeRate?: number;
 }
+
+export interface HouseWithUser extends House {
+  userId: {
+    name: string;
+    avatar?: string;
+    phoneNumber: string;
+    createdAt: string;
+  };
+}

@@ -7,14 +7,14 @@ import IconSvg from '../../shared/assets/icons/icon';
 import { useTranslation } from 'react-i18next';
 import useIsMobile from '../../shared/hooks/useIsMobile';
 import HousePageMobile from './components/housePageMobile';
-import { House } from '../../shared/types/house';
+import { HouseWithUser } from '../../shared/types/house';
 import { LoadingScreen } from '../../shared/ui/loading-screen';
 
 const HousePage = () => {
   const { t } = useTranslation();
   const { id } = useParams();
   const isMobile = useIsMobile();
-  const [house, setHouse] = useState<House | null>(null);
+  const [house, setHouse] = useState<HouseWithUser | null>(null);
   const [loading, setLoading] = useState(true);
   
   useEffect(() => {
@@ -39,6 +39,12 @@ const HousePage = () => {
       <HousePageMobile house={house}/>
     )
   }
+
+  const host = house.userId;
+  const registrationDate = new Date(host.createdAt);
+  const monthsSinceRegistration = Math.floor(
+    (Date.now() - registrationDate.getTime()) / (1000 * 60 * 60 * 24 * 30)
+  );
 
   return (
     <div className={styles['container']}>
@@ -67,11 +73,14 @@ const HousePage = () => {
         </div>
         <div className={styles['user']}>
           <div className={styles['user-avatar']}>
-            U
+            {host.avatar
+              ? <img src={host.avatar} alt={host.name}/>
+              : host.name[0].toUpperCase()
+            }
           </div>
           <div className={styles['user-description']}>
-            <h4>Хозяин:</h4>
-            <p>6 месяцев принимает гостей</p>
+            <h4>{t('host')} {host.name}</h4>
+            <p>{t('hosting-since-months', { count: monthsSinceRegistration })}</p>
           </div>
         </div>
       </div>
