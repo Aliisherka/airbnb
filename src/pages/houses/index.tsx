@@ -72,12 +72,10 @@ const HousePage = () => {
           <a href='#'>отзыв</a>
         </div>
         <div className={styles['user']}>
-          <div className={styles['user-avatar']}>
-            {host.avatar
-              ? <img src={host.avatar} alt={host.name}/>
-              : host.name[0].toUpperCase()
-            }
-          </div>
+          {host.avatarUrl
+            ? <img src={host.avatarUrl} alt={host.name} className={styles['user-avatar']}/>
+            : <div className={styles['user-avatar']}>{host.name[0].toUpperCase()}</div>
+          }
           <div className={styles['user-description']}>
             <h4>{t('host')} {host.name}</h4>
             <p>{t('hosting-since-months', { count: monthsSinceRegistration })}</p>

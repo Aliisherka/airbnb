@@ -19,8 +19,6 @@ const ProfileMenu = () => {
   const [authStep, setAuthStep] = useState<'auth' | 'name'>('auth');
   const [name, setName] = useState('');
 
-  const userInitial = user ? user.phoneNumber.charAt(1).toUpperCase() : '';
-
   const validate = () => {
     const newErrors = { phone: '', password: '', name: '' };
     if (!phone || phone.length <= countryCode.length) newErrors.phone = 'Enter your phone number';
@@ -122,8 +120,8 @@ const ProfileMenu = () => {
         button={
           <UserButton
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            userInitial={userInitial}
             isLoggedIn={!!user}
+            user={user}
           />
         }
         isOpen={isMenuOpen}

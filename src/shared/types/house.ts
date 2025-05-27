@@ -1,3 +1,5 @@
+import { User } from "./User";
+
 export interface House {
   _id: string;
   title: string;
@@ -21,10 +23,5 @@ export interface HouseCardProps extends House {
 }
 
 export interface HouseWithUser extends House {
-  userId: {
-    name: string;
-    avatar?: string;
-    phoneNumber: string;
-    createdAt: string;
-  };
+  userId: User;
 }

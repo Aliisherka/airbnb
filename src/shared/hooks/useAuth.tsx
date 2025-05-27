@@ -1,9 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-
-interface User {
-  id: string;
-  phoneNumber: string;
-}
+import { User } from '../types/User';
 
 interface AuthContextType {
   user: User | null;
