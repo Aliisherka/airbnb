@@ -21,6 +21,10 @@ const mockHouse = {
   bedrooms: 2,
   beds: 2,
   bathrooms: 1,
+  userId: {
+    createdAt: '2025-03-12T10:00:00.168Z',
+    name: 'example'
+  }
 };
 
 describe('HousePage desktop test', () => {
