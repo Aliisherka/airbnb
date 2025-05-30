@@ -102,7 +102,21 @@
         gap: 10px;
         list-style: none;
       }
+
+      &-review {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        margin-top: 8px;
+        font-weight: $font-weight-medium;
+        font-size: $font-size-base;
+  
+        .review-link {
+          color: $gray-900;
+        }
+      }
     }
+
 
     .user {
       padding: 24px 0;
@@ -127,6 +141,60 @@
       // &-description {
 
       // }
+    }
+  }
+
+  .reviews {
+    width: 100%;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding-top: 48px;
+    border-bottom: 1px solid $gray-300;
+
+    .total-reviews {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid $gray-300;
+      padding-bottom: 40px;
+      margin-bottom: 40px;
+      font-size: $font-size-xl;
+      font-weight: $font-weight-medium;
+    }
+
+    .review {
+      margin-bottom: 40px;
+
+      &-user {
+        display: flex;
+        gap: 14px;
+        align-items: center;
+        justify-content: flex-start;
+        margin-bottom: 12px;
+      }
+
+      &-user-avatar {
+        width: 48px;
+        border-radius: 50%;
+      }
+
+      &-user-name {
+        font-weight: $font-weight-medium;
+        margin-bottom: 2px;
+      }
+
+      &-information {
+        height: 18px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-bottom: 4px;
+        font-size: $font-size-sm;
+      }
+
+      &-information-date {
+        font-weight: $font-weight-medium;
+      }
     }
   }
 }

@@ -1,8 +1,11 @@
 import { fetchExchangeRate } from './currency';
-import { getHouses, searchHouses } from './houses';
+import { getHouse, getHouses, searchHouses } from './houses';
+import { getReviews } from './reviews';
 
 export const apiCall = {
   getHouses,
+  getHouse,
   searchHouses,
-  fetchExchangeRate
+  fetchExchangeRate,
+  getReviews
 }

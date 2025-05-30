@@ -9,8 +9,9 @@ import { HouseCardProps } from '../../../shared/types/house';
 import { differenceInCalendarDays, parseISO } from 'date-fns';
 import { getCurrentLanguage } from '../../../shared/lib/lang';
 import { formatDateRange } from '../../../shared/lib/formatDateRange';
+import { DotSeparator } from '../../../shared/ui/doteSeparator/DotSeparator';
 
-const HouseCard: React.FC<HouseCardProps> = ({ title, price, rating, images, _id, exchangeRate = 1, bedrooms }) => {
+const HouseCard: React.FC<HouseCardProps> = ({ title, price, images, _id, exchangeRate = 1, bedrooms, avgRating, reviewCount }) => {
   const { t } = useTranslation();
   const isMobile = useIsMobile();
   const navigate = useNavigate();
@@ -72,7 +73,7 @@ const HouseCard: React.FC<HouseCardProps> = ({ title, price, rating, images, _id
               <span className={styles['converted-price']}>{`$${convertedPrice} `}</span>
               {t('night')}
             </p>
-            <span aria-hidden='true' className={styles['dot-separator']}> · </span>
+            <DotSeparator />
 
             {totalPrice ? (
               <p className={styles['total-price']}>
@@ -85,7 +86,12 @@ const HouseCard: React.FC<HouseCardProps> = ({ title, price, rating, images, _id
         </div>
         <div className={styles['rating']}>
           <IconSvg name='star' width='12px' height='12px'/>
-          <p data-testid='house-ratings' >{rating}</p>
+          <p data-testid='house-ratings' >
+            {reviewCount > 0
+              ? `${avgRating.toFixed(1)} (${reviewCount})`
+              : t('new')
+            }
+          </p>
         </div>
       </div>
     </div>
