@@ -195,6 +195,12 @@
       &-information-date {
         font-weight: $font-weight-medium;
       }
+
+      &-information-comment {
+        width: 100%;
+        word-break: break-word;
+        overflow-wrap: break-word;
+      }
     }
   }
 }

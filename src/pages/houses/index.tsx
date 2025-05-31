@@ -57,19 +57,20 @@ const HousePage = () => {
   if (!house) return <LoadingScreen loading={loading} text={t('server-waking-up')}/>;
   if (!reviews) return <LoadingScreen loading={reviewsLoading} text={t('reviews-loading')}/>;
 
-  if (isMobile) {
-    return (
-      <HousePageMobile house={house}/>
-    )
-  }
-
+  
   const getMonthsSinceDate = (dateString: string | Date) => {
     const date = new Date(dateString);
     return Math.floor((Date.now() - date.getTime()) / (1000 * 60 * 60 * 24 * 30));
   };
-
+  
   const host = house.userId;
   const monthsSinceRegistration = getMonthsSinceDate(new Date(host.createdAt))
+
+  if (isMobile) {
+    return (
+      <HousePageMobile house={house} reviews={reviews} getMonthsSinceDate={getMonthsSinceDate}/>
+    )
+  }
 
   return (
     <div className={styles['container']}>
@@ -97,7 +98,16 @@ const HousePage = () => {
             <IconSvg name='star' width='16' height='16'/>
             <span>{house.avgRating.toFixed(1)}</span>
             <DotSeparator />
-            <a href='#' className={styles['review-link']}>{t('reviews', { count: house.reviewCount })}</a>
+            <a 
+              href='#' 
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById('reviews')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className={styles['review-link']}
+            >
+                {t('reviews', { count: house.reviewCount })}
+            </a>
           </div>
         </div>
         <div className={styles['user']}>
@@ -111,7 +121,7 @@ const HousePage = () => {
           </div>
         </div>
       </div>
-      <div className={styles['reviews']}>
+      <div className={styles['reviews']} id='reviews'>
         <div className={styles['total-reviews']}>
           <IconSvg name='star' width='20' height='20'/>
           <span>{house.avgRating.toFixed(1)}</span>
@@ -119,8 +129,8 @@ const HousePage = () => {
           <p className={styles['review-link']}>{t('reviews', { count: house.reviewCount })}</p>
         </div>
         {reviews.map((review) => (
-          <div className={styles['review']}>
-            <div className={styles['']}>
+          <div className={styles['review']} key={review._id}>
+            <div>
               <div className={styles['review-user']}>
                 <img src={review.userId.avatarUrl} alt={review.userId.name} className={styles['review-user-avatar']}/>
                 <div>
@@ -138,7 +148,7 @@ const HousePage = () => {
                 <p className={styles['review-information-date']}>{formatSingleDate(review.createdAt, currentLang)}</p>
               </div>
             </div>
-            <p>{review.comment}</p>
+            <p className={styles['review-information-comment']}>{review.comment}</p>
           </div>
         ))}
       </div>

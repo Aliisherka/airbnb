@@ -5,4 +5,5 @@ export interface Review {
   rating: number;
   createdAt: string;
   userId: User;
+  _id: string;
 }
