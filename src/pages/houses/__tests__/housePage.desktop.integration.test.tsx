@@ -3,12 +3,13 @@ import React from "react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import HousePage from "..";
-import * as api from '../../../shared/api/houses';
+import { apiCall } from '../../../shared/api';
 
-vi.mock('../../../shared/api/houses', () => ({
-  getHouse: vi.fn().mockImplementation(() =>
-    new Promise(resolve => setTimeout(() => resolve(null), 1000))
-  ),
+vi.mock('../../../shared/api', () => ({
+  apiCall: {
+    getHouse: vi.fn(() => new Promise(resolve => setTimeout(() => resolve(null), 1000))),
+    getReviews: vi.fn(() => Promise.resolve([])),
+  }
 }));
 
 const mockHouse = {
@@ -24,7 +25,9 @@ const mockHouse = {
   userId: {
     createdAt: '2025-03-12T10:00:00.168Z',
     name: 'example'
-  }
+  },
+  avgRating: 5,
+  reviewCount: 2,
 };
 
 describe('HousePage desktop test', () => {
@@ -35,7 +38,7 @@ describe('HousePage desktop test', () => {
   test('shows loading screen while fetching', async () => {
     
 
-    (api.getHouse as ReturnType<typeof vi.fn>).mockImplementation(() => 
+    (apiCall.getHouse as ReturnType<typeof vi.fn>).mockImplementation(() => 
       new Promise((resolve) => setTimeout(() => resolve(mockHouse), 1000))
     )
 
@@ -57,7 +60,7 @@ describe('HousePage desktop test', () => {
   })
 
   test('renders house details after successful fetch', async () => {
-    (api.getHouse as ReturnType<typeof vi.fn>).mockResolvedValue(mockHouse);
+    (apiCall.getHouse as ReturnType<typeof vi.fn>).mockResolvedValue(mockHouse);
 
     render(
       <MemoryRouter initialEntries={['/house/1']}>
