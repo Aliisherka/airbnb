@@ -2,25 +2,32 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import React from 'react';
 import styles from './styles.module.scss';
-import { getHouse } from '../../shared/api/houses';
 import IconSvg from '../../shared/assets/icons/icon';
 import { useTranslation } from 'react-i18next';
 import useIsMobile from '../../shared/hooks/useIsMobile';
 import HousePageMobile from './components/housePageMobile';
 import { HouseWithUser } from '../../shared/types/house';
 import { LoadingScreen } from '../../shared/ui/loading-screen';
+import { DotSeparator } from '../../shared/ui/doteSeparator/DotSeparator';
+import { apiCall } from '../../shared/api';
+import { getCurrentLanguage } from '../../shared/lib/lang';
+import { formatSingleDate } from '../../shared/lib/formatSingleDate';
+import { Review } from '../../shared/types/review';
 
 const HousePage = () => {
   const { t } = useTranslation();
   const { id } = useParams();
   const isMobile = useIsMobile();
+  const currentLang = getCurrentLanguage();
   const [house, setHouse] = useState<HouseWithUser | null>(null);
   const [loading, setLoading] = useState(true);
+  const [reviews, setReviews] = useState<Review[] | null>(null);
+  const [reviewsLoading, setReviewsLoading] = useState(true);
   
   useEffect(() => {
     const fetchHouse = async () => {
       setLoading(true);
-      const data = await getHouse(id);
+      const data = await apiCall.getHouse(id);
       if (data) {
         setHouse(data);
       }
@@ -32,19 +39,38 @@ const HousePage = () => {
     }
   }, [id]);
 
+  useEffect(() => {
+    const fetchReviews = async () => {
+      setReviewsLoading(true);
+      const data = await apiCall.getReviews(id)
+      if (data) {
+        setReviews(data)
+      }
+      setReviewsLoading(false);
+    }
+
+    if (id) {
+      fetchReviews();
+    }
+  }, [id])
+
   if (!house) return <LoadingScreen loading={loading} text={t('server-waking-up')}/>;
+  if (!reviews) return <LoadingScreen loading={reviewsLoading} text={t('reviews-loading')}/>;
+
+  
+  const getMonthsSinceDate = (dateString: string | Date) => {
+    const date = new Date(dateString);
+    return Math.floor((Date.now() - date.getTime()) / (1000 * 60 * 60 * 24 * 30));
+  };
+  
+  const host = house.userId;
+  const monthsSinceRegistration = getMonthsSinceDate(new Date(host.createdAt))
 
   if (isMobile) {
     return (
-      <HousePageMobile house={house}/>
+      <HousePageMobile house={house} reviews={reviews} getMonthsSinceDate={getMonthsSinceDate}/>
     )
   }
-
-  const host = house.userId;
-  const registrationDate = new Date(host.createdAt);
-  const monthsSinceRegistration = Math.floor(
-    (Date.now() - registrationDate.getTime()) / (1000 * 60 * 60 * 24 * 30)
-  );
 
   return (
     <div className={styles['container']}>
@@ -68,8 +94,21 @@ const HousePage = () => {
             <li>{t('beds', { count: house.beds })}</li>
             <li>{t('baths', { count: house.bathrooms })}</li>
           </ul>
-          <IconSvg name='star' width='16' height='16'/>
-          <a href='#'>отзыв</a>
+          <div className={styles['overview-review']}>
+            <IconSvg name='star' width='16' height='16'/>
+            <span>{house.avgRating.toFixed(1)}</span>
+            <DotSeparator />
+            <a 
+              href='#' 
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById('reviews')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className={styles['review-link']}
+            >
+                {t('reviews', { count: house.reviewCount })}
+            </a>
+          </div>
         </div>
         <div className={styles['user']}>
           {host.avatarUrl
@@ -78,9 +117,40 @@ const HousePage = () => {
           }
           <div className={styles['user-description']}>
             <h4>{t('host')} {host.name}</h4>
-            <p>{t('hosting-since-months', { count: monthsSinceRegistration })}</p>
+            <p>{t('months', { count: monthsSinceRegistration })} {t('hosting')}</p>
           </div>
         </div>
+      </div>
+      <div className={styles['reviews']} id='reviews'>
+        <div className={styles['total-reviews']}>
+          <IconSvg name='star' width='20' height='20'/>
+          <span>{house.avgRating.toFixed(1)}</span>
+          <DotSeparator />
+          <p className={styles['review-link']}>{t('reviews', { count: house.reviewCount })}</p>
+        </div>
+        {reviews.map((review) => (
+          <div className={styles['review']} key={review._id}>
+            <div>
+              <div className={styles['review-user']}>
+                <img src={review.userId.avatarUrl} alt={review.userId.name} className={styles['review-user-avatar']}/>
+                <div>
+                  <p className={styles['review-user-name']}>{review.userId.name}</p>
+                  <p>{t('months', { count: getMonthsSinceDate(review.userId.createdAt) })} {t('on-airbnb')}</p>
+                </div>
+              </div>
+              <div className={styles['review-information']}>
+                <div >
+                  {[...Array(5)].map((_, i) => (
+                    <IconSvg name='star' width='9' height='9' key={i} color={i < review.rating ? 'black' : 'grey'}/>
+                  ))}
+                </div>
+                <DotSeparator />
+                <p className={styles['review-information-date']}>{formatSingleDate(review.createdAt, currentLang)}</p>
+              </div>
+            </div>
+            <p className={styles['review-information-comment']}>{review.comment}</p>
+          </div>
+        ))}
       </div>
     </div>
   );

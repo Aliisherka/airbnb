@@ -5,14 +5,21 @@ import { House } from '../../../shared/types/house';
 import { useTranslation } from 'react-i18next';
 import IconSvg from '../../../shared/assets/icons/icon';
 import { useSwipeCarousel } from '../../../shared/hooks/useSwipeCarousel';
+import { DotSeparator } from '../../../shared/ui/doteSeparator/DotSeparator';
+import { Review } from '../../../shared/types/review';
+import { formatSingleDate } from '../../../shared/lib/formatSingleDate';
+import { getCurrentLanguage } from '../../../shared/lib/lang';
 
 interface HousePageMobileProps {
-  house: House
+  house: House;
+  reviews: Review[];
+  getMonthsSinceDate: (dateString: string | Date) => number;
 }
 
-export const HousePageMobile = ({ house }: HousePageMobileProps) => {
+export const HousePageMobile = ({ house, reviews, getMonthsSinceDate }: HousePageMobileProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const currentLang = getCurrentLanguage();
   const {
     currentIndex,
     offsetX,
@@ -62,6 +69,56 @@ export const HousePageMobile = ({ house }: HousePageMobileProps) => {
           <li>{t('beds')}</li>
           <li>{t('baths')}</li>
         </ul>
+        <div className={styles['overview-review']}>
+          <IconSvg name='star' width='8' height='8'/>
+          <span>{house.avgRating.toFixed(1)}</span>
+          <DotSeparator />
+          <a 
+            href='#'
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById('reviews')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className={styles['review-link']}
+          >
+            {t('reviews', { count: house.reviewCount })}
+          </a>
+        </div>
+      </div>
+      <div className={styles['reviews']} id='reviews'>
+        <div className={styles['total-reviews']}>
+          <IconSvg name='star' width='20' height='20'/>
+          <span>{house.avgRating.toFixed(1)}</span>
+          <DotSeparator />
+          <p className={styles['review-link']}>{t('reviews', { count: house.reviewCount })}</p>
+        </div>
+        <div className={styles['reviews-carousel-wrapper']}>
+          <div className={styles['reviews-carousel']}>
+            {reviews.map((review) => (
+              <div className={styles['review']} key={review._id}>
+                <div>
+                  <div className={styles['review-information']}>
+                    <div>
+                      {[...Array(5)].map((_, i) => (
+                        <IconSvg name='star' width='9' height='9' key={i} color={i < review.rating ? 'black' : 'grey'}/>
+                      ))}
+                    </div>
+                    <DotSeparator />
+                    <p>{formatSingleDate(review.createdAt, currentLang)}</p>
+                  </div>
+                  <p className={styles['review-information-comment']}>{review.comment}</p>
+                </div>
+                <div className={styles['review-user']}>
+                  <img src={review.userId.avatarUrl} alt={review.userId.name} className={styles['review-user-avatar']}/>
+                  <div>
+                    <p className={styles['review-user-name']}>{review.userId.name}</p>
+                    <p>{t('months', { count: getMonthsSinceDate(review.userId.createdAt) })} {t('on-airbnb')}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </>
   );

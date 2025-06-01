@@ -7,7 +7,6 @@ export interface House {
   country: string;
   price: string;
   currency: string;
-  rating: number;
   images: string[];
   createdAt: string;
   updatedAt: string;
@@ -16,6 +15,8 @@ export interface House {
   bedrooms: number;
   beds: number;
   bathrooms: number;
+  avgRating: number;
+  reviewCount: number;
 }
 
 export interface HouseCardProps extends House {
